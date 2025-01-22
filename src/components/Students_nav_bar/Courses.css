@@ -21,7 +21,7 @@ body, html {
   border-bottom: 2px solid #004080;
   left: 0;
   top: 0;
-  z-index: 1000;
+  /* z-index: 1000; */
 }
 
 
@@ -29,6 +29,7 @@ body, html {
   display: flex;
   align-items: center;
   gap: 15px;
+  z-index: 10000;
   margin-right: 80px;
 }
 
@@ -160,7 +161,7 @@ body, html {
   color: #333;
   background: #f0f4f8; /* Subtle background color */
   border-radius: 10px;
-  margin-left: 20%;
+  margin-left: 30%;
   width: 70%
 }
 /* Course Grid */
@@ -174,7 +175,7 @@ body, html {
   list-style: none;
 }
 .course-side{
-  width: 40px
+  /* width: 40px */
 }
 
 .course-item {

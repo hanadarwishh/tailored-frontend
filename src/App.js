@@ -9,6 +9,7 @@ import QuizPage from "./components/Students_nav_bar/pages_in_nav_bar/QuizPage.js
 import ExplainerSection from "./components/Students_nav_bar/pages_in_nav_bar/ExplainerSection.jsx";
 import ProgressTracker from "./components/Students_nav_bar/pages_in_nav_bar/ProgressTracker.jsx";
 import CourseDetails from "./components/Students_nav_bar/CourseDetails.jsx";
+import PostExplainerVideo from "./components/Students_nav_bar/pages_in_nav_bar/PostExplainerVideo.jsx";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
         <Route path="/progress-tracker" element={<ProgressTracker />} />
         <Route path="/course-details" element={<CourseDetails />} />
         <Route path="/course-details/:id" element={<CourseDetails />} />
+        <Route path="/post-explainer-video" element={<PostExplainerVideo />} />
       </Routes>
     </Router>
   );

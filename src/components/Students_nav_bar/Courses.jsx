@@ -14,7 +14,8 @@ const Courses = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const userData = JSON.parse(localStorage.getItem("userData")) || {};
+  const TOKEN = userData.token;
   // Function to generate a random color
   const generateRandomColor = () => {
     const letters = "0123456789ABCDEF";
@@ -30,10 +31,9 @@ const Courses = () => {
     const fetchCourses = async () => {
       setLoading(true);
       try {
-        const token = "2aa9cad85973d3790f2f6c467317c6ac"; // Replace with the actual token
         const response = await fetch("http://localhost:3002/api/courses", {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${TOKEN}`,
           },
         });
 

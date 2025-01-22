@@ -1,127 +1,170 @@
-/* ExplainerSection.css - Modernized */
+.explainer-section {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
 
-.explainer-sidebar{
-    display: flex;
-    flex-direction: row;
-}
-.explainer-section-container {
-    max-width: 600px;
-    margin: 40px auto; /* Adjusted margin for better spacing */
-    padding: 30px;
-    background: #ffffff; /* White background for modern look */
-    border-radius: 10px; /* Match with Courses Page */
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.1); /* Enhance depth */
-    text-align: center; /* Central alignment for form */
-}
-
-.section-title {
-    font-size: 26px;
-    font-weight: bold;
-    color: #0056b3; /* Match the primary blue theme */
-    margin-bottom: 20px;
-    text-transform: uppercase; /* Adds a professional look */
-    letter-spacing: 1px; /* Slight spacing for modern aesthetics */
-}
-
-.explainer-form {
+  }
+  
+  .videos-container {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Increased spacing for cleaner layout */
-}
-
-.form-group {
+    gap: 20px;
+  }
+  
+  .video-card {
     display: flex;
     flex-direction: column;
-    text-align: left;
-}
-
-label {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 8px;
-    color: #2a3d66; /* Consistent dark text color */
-}
-
-input[type="text"],
-input[type="file"] {
-    padding: 12px;
-    font-size: 14px;
-    border: 1px solid #ddd; /* Neutral border color */
-    border-radius: 8px; /* Match with other rounded elements */
-    outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-}
-
-input[type="text"]:focus,
-input[type="file"]:focus {
-    border-color: #0056b3; /* Primary blue on focus */
-    box-shadow: 0 0 6px rgba(0, 86, 179, 0.5); /* Glow effect */
-}
-
-.submit-button {
-    padding: 12px 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: white;
-    background: linear-gradient(135deg, #0056b3, #3b87d6); /* Gradient for modern look */
-    border: none;
-    border-radius: 20px; /* Pill-shaped button */
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover and interaction */
-}
-
-.submit-button:hover {
-    background-color: rgb(49, 94, 210); /* Slightly darker blue on hover */
-    transform: scale(1.05); /* Slight zoom effect */
-}
-/* Style the custom file input container */
-.file-input-container {
+    gap: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .video-container iframe {
+    border-radius: 10px;
+  }
+  
+  .video-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .creator-info {
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 100%; /* Make it responsive */
-    max-width: 400px;
-    margin: 20px auto;
-}
-
-/* Custom "Choose File" button */
-.custom-file-button {
-    background: linear-gradient(135deg, #0056b3, #3b87d6);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    position: relative;
-    z-index: 1;
-}
-
-/* Hover effect for the button */
-.custom-file-button:hover {
-    background: #315ed2;
-    transform: scale(1.05);
-}
-
-/* Hidden file input (styled for accessibility) */
-.file-input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-    z-index: 2;
-}
-
-/* File name display */
-.file-name {
-    font-size: 14px;
+    gap: 15px;
+  }
+  
+  .creator-profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .creator-details h3 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .creator-role {
+    color: #888;
+    font-size: 0.9em;
+  }
+  
+  .video-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
     color: #555;
-    margin-top: 10px;
-    text-align: center;
-}
+  }
+  
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .video-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .like-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .like-button:hover {
+    background-color: #0056b3;
+  }
+  .small-exp{
+    flex-direction: row;
+    display: flex;
+    margin-top: 9%;
+
+  }
+
+  .content-container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .filter-column {
+    width: 250px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+  }
+  
+  .filter-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    color: #2a3d66;
+    margin-bottom: 15px;
+  }
+  
+  .filter-group {
+    margin-bottom: 20px;
+  }
+  
+  .filter-group h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .filter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .filter-list li {
+    padding: 8px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+    color: #333;
+  }
+  
+  .filter-list li:hover,
+  .filter-list li.active-filter {
+    background-color: #2a3d66;
+    color: #fff;
+  }
+  
+  .filter-search {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .add-video-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    background-color: #2a3d66;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-video-button:hover {
+    background-color: #0056b3;
+  }
+  

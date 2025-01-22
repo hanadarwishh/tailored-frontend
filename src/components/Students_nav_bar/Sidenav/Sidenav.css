@@ -8,6 +8,7 @@
     padding: 20px;
     margin-left: 20px;
     border-radius: 60px;
+    z-index: 1000;
   }
   .portfolio-icon {
     margin-right: 8px;
