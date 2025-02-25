@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './PostExplainerVideo.css';
 import SidebarPage from '../Sidenav/Sidenav';
+import { useNavigate } from "react-router-dom";
 
 const ExplainerSection = () => {
+      const navigate = useNavigate();
+    
     const [fileName, setFileName] = useState('No file chosen');
     const [selectedCourse, setSelectedCourse] = useState('');
     const [selectedCourseName, setSelectedCourseName] = useState('');
@@ -91,6 +94,8 @@ const ExplainerSection = () => {
             if (response.ok) {
                 const result = await response.json();
                 console.log('Success:', result);
+                alert("Successfully posted")
+                navigate("/explainer-section")
             } else {
                 console.log(response);
                 throw new Error('Something went wrong!');

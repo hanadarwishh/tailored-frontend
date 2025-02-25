@@ -1,38 +1,84 @@
-.progress-tracker {
+.pt-container {
     font-family: Arial, sans-serif;
     padding: 20px;
+    max-width: 900px;
+    margin: auto;
+    color: #2a3d66;
 }
-.major-selection-container{
-    margin-left: 60px;
+
+.pt-header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2a3d66;
 }
-.major-selection select {
-    padding: 5px;
+
+.pt-card {
+    background: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     margin-bottom: 20px;
 }
 
-.courses-section {
-    margin-bottom: 20px;
+.pt-section-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #2a3d66;
+    display: flex;
+    align-items: center;
 }
 
-.course-list {
+.pt-select {
+    width: 100%;
+    padding: 10px;
     margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
 }
 
-.course-item {
-    margin: 5px 0;
+.pt-course-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.credits-summary {
+.pt-course-card:hover {
+    background: #eef1f7;
+}
+
+.pt-course-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.pt-total-credits {
+    font-size: 2em;
+    color: #2a3d66;
+    font-weight: bold;
+    text-align: center;
+}
+
+.pt-progress-bar-container {
+    background: #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0;
+    height: 20px;
+}
+
+.pt-progress-bar {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+.pt-error-message {
+    color: #e74c3c;
+    text-align: center;
     margin-top: 20px;
     font-weight: bold;
-}
-
-.error-message {
-    color: red;
-    margin-top: 10px;
-}
-
-.loading-message {
-    margin-top: 20px;
-    font-style: italic;
 }

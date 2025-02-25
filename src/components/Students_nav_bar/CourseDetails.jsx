@@ -7,6 +7,7 @@ import {
   FaFolderOpen,
   FaFileDownload,
   FaUpload,
+  FaComments
 } from "react-icons/fa";
 import Modal from "react-modal";
 import "./CourseDetails.css";
@@ -253,6 +254,7 @@ const CourseDetails = () => {
         {sections.length > 0 ? (
           sections.map((section) => (
             <div key={section.id} className="section-card">
+              
               <div
                 className="section-header"
                 onClick={() => toggleSection(section.id)}
@@ -276,7 +278,14 @@ const CourseDetails = () => {
                         >
                           <FaUpload className="red-icon" /> {module.name}
                         </button>
-                      ) : (
+                      ) : module.modname === "forum" ? (
+                        <button
+                          className="forum-button"
+                          onClick={() => navigate("/discussion-forum", { state: { forumId: module.instance } })}
+                        >
+                          <FaComments className="blue-icon" /> {module.name}
+                        </button>
+                      ): (
                         <div>
                           <a
                             href={module.url}
@@ -356,7 +365,7 @@ const CourseDetails = () => {
               <p><strong>Time Remaining:</strong> {timeRemaining}</p>
             </div>
 
-            {/* Text Submission */}
+            {/* Text Submission
             <div className="text-submission">
               <label htmlFor="textSubmission">Enter your text submission:</label>
               <textarea
@@ -366,7 +375,7 @@ const CourseDetails = () => {
                 placeholder="Type your submission here"
                 rows="5"
               />
-            </div>
+            </div> */}
 
             {/* File Upload Button */}
             <button

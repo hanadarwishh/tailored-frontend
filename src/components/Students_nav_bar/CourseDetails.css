@@ -21,7 +21,7 @@ body, html {
     border-bottom: 2px solid #004080;
     left: 0;
     top: 0;
-    z-index: 1000;
+    /* z-index: 1000; */
   }
   
   
@@ -268,10 +268,14 @@ body, html {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    position: absolute;
+    display: flex;
+    z-index: 80000000;
   }
   
   .modal-container {
+    margin-top: 5%;
+    z-index: 800000;
     background: #fff;
     border-radius: 8px;
     width: 400px;
@@ -289,7 +293,7 @@ body, html {
   }
   
   .modal-body {
-    margin-top: 10px;
+    margin-top: 20px;
   }
   .file-name {
     font-size: 0.9rem;
@@ -894,8 +898,10 @@ body, html {
     background: #fff;
     border-radius: 10px;
     padding: 20px;
+    margin-top: 4%;
     width: 80%;
     max-width: 600px;
+    z-index: 9000000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
   
@@ -942,6 +948,7 @@ body, html {
     border-radius: 5px;
     cursor: pointer;
     font-size: 14px;
+    margin-top: 2px;
     float: right;
   }
   

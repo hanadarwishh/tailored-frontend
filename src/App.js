@@ -10,6 +10,8 @@ import ExplainerSection from "./components/Students_nav_bar/pages_in_nav_bar/Exp
 import ProgressTracker from "./components/Students_nav_bar/pages_in_nav_bar/ProgressTracker.jsx";
 import CourseDetails from "./components/Students_nav_bar/CourseDetails.jsx";
 import PostExplainerVideo from "./components/Students_nav_bar/pages_in_nav_bar/PostExplainerVideo.jsx";
+import DiscussionForum from "./components/Students_nav_bar/discussion_forum/DiscussionForum.jsx";
+import DiscussionTopic from "./components/Students_nav_bar/discussion_forum/DiscussionTopic.jsx";
 function App() {
   return (
     <Router>
@@ -26,6 +28,8 @@ function App() {
         <Route path="/course-details" element={<CourseDetails />} />
         <Route path="/course-details/:id" element={<CourseDetails />} />
         <Route path="/post-explainer-video" element={<PostExplainerVideo />} />
+        <Route path="/discussion-forum" element={<DiscussionForum />} />
+        <Route path="/discussion-topic" element={<DiscussionTopic />} />
       </Routes>
     </Router>
   );

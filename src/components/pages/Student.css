@@ -132,17 +132,20 @@
 .react-calendar__navigation button {
   font-size: 1.8rem;
   font-weight: bold;
+  color: grey;
+
 }
 
 .react-calendar__tile {
   position: relative;
+  color: grey;
   text-align: center;
 }
 
 .react-calendar__tile .event-dot {
   width: 8px;
   height: 8px;
-  background-color: blue;
+  background-color: #2a3d66;
   border-radius: 50%;
   position: absolute;
   bottom: 10%; /* Position adjusted to make it visible */
