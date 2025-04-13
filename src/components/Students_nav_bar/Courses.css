@@ -580,3 +580,23 @@ body, html {
 }
 
 
+.chatbot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #0084ff; /* Blue background */
+  border-radius: 50%;
+  padding: 15px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+}
+
+.chatbot-icon-style {
+  color: white;
+  font-size: 24px;
+}
+
+.chatbot-icon:hover {
+  background-color: #0073e6; /* Darker blue on hover */
+}

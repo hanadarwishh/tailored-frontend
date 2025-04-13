@@ -7,7 +7,8 @@ import {
   FaFolderOpen,
   FaFileDownload,
   FaUpload,
-  FaComments
+  FaComments,
+  FaClipboardList // Importing the summarization icon
 } from "react-icons/fa";
 import Modal from "react-modal";
 import "./CourseDetails.css";
@@ -70,15 +71,15 @@ const CourseDetails = () => {
         alert("Please provide a text or file for submission.");
         return;
       }
-  
+
       // Prepare FormData for the file upload
       const formData = new FormData();
-  
+
       // Add file if provided
       if (file) {
         formData.append("file", file); // The file input field should match the backend handler's expected name
       }
-  
+
       // Add pluginData for text submission and file draft area
       const pluginData = {
         onlinetext_editor: {
@@ -88,11 +89,11 @@ const CourseDetails = () => {
         },
         files_filemanager: 0, // If a file is uploaded, this should match the draft area ID
       };
-  
+
       formData.append("pluginData", JSON.stringify(pluginData));
-  
+
       setUploading(true);
-  
+
       // Make the API call
       const response = await fetch(
         `http://localhost:3002/api/courses/submit/assignment/${selectedAssignment.id}`,
@@ -104,7 +105,7 @@ const CourseDetails = () => {
           body: formData,
         }
       );
-  
+
       if (response.ok) {
         const data = await response.json();
         alert("Assignment submitted successfully!");
@@ -120,8 +121,6 @@ const CourseDetails = () => {
       setUploading(false);
     }
   };
-  
-  
 
   const openAssignmentModal = async (assignid) => {
     try {
@@ -255,6 +254,7 @@ const CourseDetails = () => {
           sections.map((section) => (
             <div key={section.id} className="section-card">
               
+            
               <div
                 className="section-header"
                 onClick={() => toggleSection(section.id)}
@@ -285,8 +285,14 @@ const CourseDetails = () => {
                         >
                           <FaComments className="blue-icon" /> {module.name}
                         </button>
-                      ): (
+                      ) : (
                         <div>
+                          <div className="lecture-summarization-icon">
+                            <FaClipboardList 
+                              className="green-icon"
+                              onClick={() => navigate("/lecture-summarization")}
+                            />
+                          </div>
                           <a
                             href={module.url}
                             target="_blank"
@@ -327,108 +333,40 @@ const CourseDetails = () => {
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeAssignmentModal}
-        className="assignment-modal"
-        overlayClassName="assignment-modal-overlay"
+        contentLabel="Assignment Submission"
+        className="modal-content"
+        overlayClassName="modal-overlay"
       >
-        {selectedAssignment ? (
-          <div>
-            <h3>{selectedAssignment.name}</h3>
-            <p>
-              <strong>Opened:</strong>{" "}
-              {new Date(selectedAssignment.allowsubmissionsfromdate * 1000).toLocaleString()}
-            </p>
-            <p>
-              <strong>Due:</strong>{" "}
-              {new Date(selectedAssignment.duedate * 1000).toLocaleString()}
-            </p>
-            {selectedAssignment.intro && (
-              <p dangerouslySetInnerHTML={{ __html: selectedAssignment.intro }} />
-            )}
-            {selectedAssignment.introattachments?.length > 0 && (
-              <div>
-                <h4>Assignment Files:</h4>
-                {selectedAssignment.introattachments.map((file, index) => (
-                  <a
-                    key={index}
-                    href={`${file.fileurl}&token=2aa9cad85973d3790f2f6c467317c6ac`}
-                    download
-                    className="content-link"
-                  >
-                    <FaFileDownload /> {file.filename}
-                  </a>
-                ))}
-              </div>
-            )}
+        <h3>{selectedAssignment?.name}</h3>
+        <p>Time remaining: {timeRemaining}</p>
 
-            {/* Countdown Timer */}
-            <div className="countdown-timer" style={{ color: "red" }}>
-              <p><strong>Time Remaining:</strong> {timeRemaining}</p>
-            </div>
+        <textarea
+          placeholder="Enter text for submission (optional)"
+          value={textSubmission}
+          onChange={(e) => setTextSubmission(e.target.value)}
+          rows="4"
+          className="submission-textarea"
+        />
 
-            {/* Text Submission
-            <div className="text-submission">
-              <label htmlFor="textSubmission">Enter your text submission:</label>
-              <textarea
-                id="textSubmission"
-                value={textSubmission}
-                onChange={(e) => setTextSubmission(e.target.value)}
-                placeholder="Type your submission here"
-                rows="5"
-              />
-            </div> */}
+        <div
+          className={`file-upload-area ${dragging ? "dragging" : ""}`}
+          onDrop={handleDrop}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+        >
+          <p>{file ? file.name : "Drag and drop or browse to select a file"}</p>
+          <input type="file" onChange={handleFileChange} />
+        </div>
 
-            {/* File Upload Button */}
-            <button
-              className="file-select-button"
-              onClick={() => document.getElementById("fileInput").click()}
-            >
-              <FaUpload /> Select File
-            </button>
-            <input
-              id="fileInput"
-              type="file"
-              onChange={handleFileChange}
-              className="file-input"
-              style={{ display: "none" }}
-            />
-
-            {/* Drag and Drop Section */}
-            <div
-              className={`drag-drop-area ${dragging ? "dragging" : ""}`}
-              onDrop={handleDrop}
-              onDragOver={handleDragOver}
-              onDragLeave={handleDragLeave}
-            >
-              <p>
-                {file ? `Selected File: ${file.name}` : dragging ? "Release to drop the file" : "Drag & drop a file here"}
-              </p>
-            </div>
-
-            {/* Submit Assignment Button */}
-            <div className="submit-button-wrapper">
-              <button
-                className="add-submission-button"
-                onClick={submitAssignment}
-                disabled={uploading}
-              >
-                {uploading ? "Uploading..." : "Submit Assignment"}
-              </button>
-            </div>
-          </div>
-        ) : (
-          <p>Loading assignment details...</p>
-        )}
-        <button className="close-modal-button" onClick={closeAssignmentModal}>
-          Close
-        </button>
+        <div className="modal-actions">
+          <button onClick={submitAssignment} disabled={uploading}>
+            {uploading ? "Submitting..." : "Submit Assignment"}
+          </button>
+          <button onClick={closeAssignmentModal}>Close</button>
+        </div>
       </Modal>
-
-      <button className="back-button" onClick={() => navigate("/courses")}>
-        Back to Courses
-      </button>
     </div>
     </div>
-
   );
 };
 

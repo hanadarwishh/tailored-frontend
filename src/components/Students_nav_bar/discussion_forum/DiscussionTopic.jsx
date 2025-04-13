@@ -74,7 +74,6 @@ const DiscussionTopic = () => {
       }
 
       const responseData = await response.json();
-      console.log("Reply sent:", responseData);
 
       // Close modal and clear input fields
       setShowReplyModal(false);

@@ -12,6 +12,9 @@ import CourseDetails from "./components/Students_nav_bar/CourseDetails.jsx";
 import PostExplainerVideo from "./components/Students_nav_bar/pages_in_nav_bar/PostExplainerVideo.jsx";
 import DiscussionForum from "./components/Students_nav_bar/discussion_forum/DiscussionForum.jsx";
 import DiscussionTopic from "./components/Students_nav_bar/discussion_forum/DiscussionTopic.jsx";
+import MyProfile from "./components/Students_nav_bar/pages_in_nav_bar/ExplainerSection/MyProfile.jsx";
+import MultiChatbot from "./components/ChatbotMulti.jsx"
+
 function App() {
   return (
     <Router>
@@ -30,6 +33,8 @@ function App() {
         <Route path="/post-explainer-video" element={<PostExplainerVideo />} />
         <Route path="/discussion-forum" element={<DiscussionForum />} />
         <Route path="/discussion-topic" element={<DiscussionTopic />} />
+        <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/multi-purpose-chatbot" element={<MultiChatbot/>}/>
       </Routes>
     </Router>
   );

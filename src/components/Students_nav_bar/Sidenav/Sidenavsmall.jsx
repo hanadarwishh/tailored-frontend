@@ -62,7 +62,7 @@ const SidebarSmall = () => {
             </Link>
           </li>
           <li>
-            <Link to="/account">
+            <Link to="/my-profile">
               <FontAwesomeIcon icon={faUser} className="account-icon" />
             </Link>
           </li>
