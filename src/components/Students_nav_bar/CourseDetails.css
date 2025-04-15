@@ -1073,4 +1073,34 @@ body, html {
       transform: translateY(-20px);
     }
   }
-  
+/* Adjusting the course module items to allow the icon to float on the right */
+.course-module-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative; /* To position the summarize icon absolutely within this container */
+}
+
+/* Summarize Icon Styling */
+.lecture-summarization-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.lecture-summarization-icon:hover {
+  color: #007bff; /* Color when hovering */
+}
+
+.lecture-summarization-icon .green-icon {
+  font-size: 1.5rem;
+  margin-right: 10px; /* Space between icon and module */
+}
+
+/* Icon appearance */
+.green-icon {
+  color: green;
+}

@@ -81,8 +81,8 @@ const ChatApp = () => {
     try {
       const formData = new FormData();
       if (message) formData.append("query", message);
-      if (courseName) formData.append("course_name", courseName);  
-      if (courseId) formData.append("course_code", courseId);  
+      if (courseName) formData.append("course_name", "data structure");  
+      if (courseId) formData.append("course_code", "CSAI230");  
 
       const response = await axios.post(
         "http://localhost:3006/api/chatbot/course/chatbot/upload",
@@ -91,7 +91,6 @@ const ChatApp = () => {
           headers: { Authorization: `Bearer ${TOKEN}` },
         }
       );
-
       return response.data;
     } catch (error) {
       console.error("Error sending message:", error);
@@ -113,7 +112,6 @@ const ChatApp = () => {
     setMessages((prev) => [...prev, newMessage]);
 
     const botResponse = await sendMessageToServer(input);
-
     setMessages((prev) => [
       ...prev,
       {
@@ -123,7 +121,7 @@ const ChatApp = () => {
       },
     ]);
 
-    setInput(""); // Clear input after sending
+    setInput(""); 
   };
 
   return (

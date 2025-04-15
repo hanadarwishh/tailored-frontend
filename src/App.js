@@ -15,6 +15,7 @@ import DiscussionTopic from "./components/Students_nav_bar/discussion_forum/Disc
 import MyProfile from "./components/Students_nav_bar/pages_in_nav_bar/ExplainerSection/MyProfile.jsx";
 import MultiChatbot from "./components/ChatbotMulti.jsx";
 import CourseChatbot from "./components/CourseChatbot.jsx";
+import CourseSummarize from "./components/CourseSummarize.jsx";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/my-profile" element={<MyProfile />} />
         <Route path="/multi-purpose-chatbot" element={<MultiChatbot />} />
         <Route path="/course-chatbot" element={<CourseChatbot />} />
+        <Route path="/lecture-summarize" element={<CourseSummarize />} />
       </Routes>
     </Router>
   );

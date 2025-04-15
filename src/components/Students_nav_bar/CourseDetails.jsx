@@ -9,6 +9,7 @@ import {
   FaUpload,
   FaComments,
   FaClipboardList,
+  FaRegFileAlt,  // Add the Summarize Icon (can use this or any other)
 } from "react-icons/fa";
 import Modal from "react-modal";
 import "./CourseDetails.css";
@@ -220,6 +221,39 @@ const CourseDetails = () => {
       }
     });
   };
+
+  const handleSummarizeClick = (selectedFileUrl, selectedModuleId) => {
+    const allLectures = [];
+  
+    sections.forEach((section) => {
+      section.modules?.forEach((module) => {
+        if (module.contents?.length > 0) {
+          module.contents.forEach((content) => {
+            allLectures.push({
+              moduleId: module.id,
+              name: content.filename,
+              filename: content.filename, // make sure filename is included
+              url: content.fileurl,
+              fileurl: content.fileurl,  // explicitly include fileurl
+            });
+          });
+        }
+      });
+    });
+  
+    const selectedLecture = allLectures.find(
+      (lecture) => lecture.url === selectedFileUrl
+    );
+  
+    navigate("/lecture-summarize", {
+      state: {
+        selectedLecture,
+        allLectures,
+        courseName
+      },
+    });
+  };
+  
   
 
   if (loading) {
@@ -294,10 +328,11 @@ const CourseDetails = () => {
                         ) : (
                           <div>
                             <div className="lecture-summarization-icon">
-                              <FaClipboardList 
-                                className="green-icon"
-                                onClick={() => navigate("/lecture-summarization")}
-                              />
+                            <FaRegFileAlt 
+  className="green-icon"
+  onClick={() => handleSummarizeClick(module.contents[0]?.fileurl, module.id)}
+/>
+
                             </div>
                             <a
                               href={module.url}
@@ -312,7 +347,7 @@ const CourseDetails = () => {
                                 {module.contents.map((content, index) => (
                                   <div key={index} className="content-item">
                                     <a
-                                      href={`${content.fileurl}&token=2aa9cad85973d3790f2f6c467317c6ac`}
+                                      href={`${content.fileurl}&token=${TOKEN}`}
                                       download
                                       className="content-link"
                                     >
@@ -368,13 +403,15 @@ const CourseDetails = () => {
             <button onClick={submitAssignment} disabled={uploading}>
               {uploading ? "Submitting..." : "Submit Assignment"}
             </button>
-            <button onClick={closeAssignmentModal}>Close</button>
+            <button onClick={closeAssignmentModal}>Cancel</button>
           </div>
         </Modal>
 
-        <div className="chatbot-container" onClick={handleChatbotClick}>
+      </div>
+
+      <div className="chatbot-container" onClick={handleChatbotClick}>
           <div className={`chatbot-bubble ${showBubble ? 'show' : ''}`}>
-            <p>I'm here to help! How can I assist you with your course?</p>
+            <p>Hi there! I am here if you need any help!</p>
           </div>
           <img
             src={chatbotImage}
@@ -382,7 +419,6 @@ const CourseDetails = () => {
             className="chatbot-image"
           />
         </div>
-      </div>
     </div>
   );
 };
