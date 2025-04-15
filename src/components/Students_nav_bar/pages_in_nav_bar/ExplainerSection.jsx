@@ -1,46 +1,36 @@
 import React, { useEffect, useState } from "react";
 import "./ExplainerSection.css";
-import { 
-  FaThumbsUp, 
-  FaUser, 
-  FaVideo, 
-  FaRegClock, 
-  FaBook, 
-  FaFilter, 
-  FaPlus 
-} from 'react-icons/fa';
+import { FaEye, FaThumbsUp, FaUser, FaVideo, FaRegClock, FaBook, FaFilter, FaPlus } from 'react-icons/fa';
+
 import SidebarSmall from "../Sidenav/Sidenavsmall";
 import Navbar from "../../NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
 
 
-
 const ExplainerSection = ({ courseId, userId }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [videos, setVideos] = useState([]);
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  
+  const [expandedCourses, setExpandedCourses] = useState({});
+
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const TOKEN = userData.token;
 
-  // Helper function to format Google Drive video URL
   const getEmbedVideoUrl = (url) => {
     const fileId = url.split("/d/")[1]?.split("/")[0];
     return `https://drive.google.com/file/d/${fileId}/preview`;
   };
 
-  // Fetch list of courses
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await fetch("http://localhost:3002/api/courses", {
           headers: { Authorization: `Bearer ${TOKEN}` },
         });
-
         if (!response.ok) throw new Error("Failed to fetch courses");
         const data = await response.json();
         setCourses(data.courses || []);
@@ -48,11 +38,9 @@ const ExplainerSection = ({ courseId, userId }) => {
         console.error("Error fetching courses:", error.message);
       }
     };
-
     fetchCourses();
   }, [TOKEN]);
 
-  // Fetch videos based on selected course or initial feed
   useEffect(() => {
     const fetchVideos = async () => {
       try {
@@ -74,11 +62,9 @@ const ExplainerSection = ({ courseId, userId }) => {
         setLoading(false);
       }
     };
-
     fetchVideos();
   }, [TOKEN, selectedCourse]);
 
-  // Handle video like action
   const handleLike = async (videoId) => {
     try {
       const response = await fetch(`http://localhost:3005/api/explainersection/${videoId}`, {
@@ -104,111 +90,146 @@ const ExplainerSection = ({ courseId, userId }) => {
     }
   };
 
-  // Filter videos based on course and search query
   const filteredVideos = videos.filter((video) =>
     (selectedCourse === "" || video.courseName === selectedCourse) &&
     (searchQuery === "" || video.topic.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+
   const handleAddButton = () => {
-    navigate("/post-explainer-video")
-  }
+    navigate("/post-explainer-video");
+  };
+
+  const toggleViewMore = (courseName) => {
+    setExpandedCourses((prev) => ({
+      ...prev,
+      [courseName]: !prev[courseName],
+    }));
+  };
 
   if (loading) return <p>Loading videos...</p>;
 
   return (
-    <div className="sidenavbar-small-exp">
+    <div className="explainer-main-container">
       <Navbar />
-      <div className="small-exp">
-        <SidebarSmall />
-        <div className="explainer-section">
-          <h1>Explainer Section</h1>
-          <div className="content-container">
-            <div className="filter-column">
-              <h2 className="filter-title">
-                <FaFilter /> Filters
-              </h2>
-              <div className="filter-group">
-                <h3>Courses</h3>
-                <ul className="filter-list">
+      <div className="sidebar-and-content">
+
+        <div className="explainer-content">
+          <h1 className="section-header">Welcome to ExplainED!</h1>
+
+          <div className="filter-and-search">
+            <div className="filters">
+              <h2><FaFilter /> Filter by Course</h2>
+              <ul>
+                <li 
+                  className={selectedCourse === "" ? "active-filter" : ""}
+                  onClick={() => setSelectedCourse("")}
+                >
+                  All Courses
+                </li>
+                {courses.map(course => (
                   <li
-                    className={selectedCourse === "" ? "active-filter" : ""}
-                    onClick={() => setSelectedCourse("")}
+                    key={course.courseId}
+                    className={selectedCourse === course.fullname ? "active-filter" : ""}
+                    onClick={() => setSelectedCourse(course.fullname)}
                   >
-                    All Courses
+                    {course.fullname}
                   </li>
-                  {courses.map((course) => (
-                    <li
-                      key={course.courseId}
-                      className={selectedCourse === course.fullname ? "active-filter" : ""}
-                      onClick={() => setSelectedCourse(course.fullname)}
-                    >
-                      {course.fullname}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="filter-group">
-                <h3>Search</h3>
-                <input
-                  type="text"
-                  placeholder="Search videos..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="filter-search"
-                />
-              </div>
-              <button onClick={handleAddButton} className="add-video-button">
+                ))}
+              </ul>
+              <input 
+                type="text" 
+                placeholder="Search topics..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button className="add-video-btn" onClick={handleAddButton}>
                 <FaPlus /> Add Video
               </button>
             </div>
-            <div className="videos-container">
-              {filteredVideos.map((video) => (
-                <div key={video.videoId} className="video-card">
-                  <div className="video-container">
-                    <iframe
-                      src={getEmbedVideoUrl(video.videoUrl)}
-                      width="640"
-                      height="360"
-                      frameBorder="0"
-                      allow="autoplay; encrypted-media"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                  <div className="video-info">
-                    <div className="creator-info">
-                      <img
-                        src={video.creator.profileimageurl || "https://via.placeholder.com/50"}
-                        alt="Creator"
-                        className="creator-profile-img"
-                      />
-                      <div className="creator-details">
-                        <h3>{video.creator.username}</h3>
-                        <p className="creator-role">Creator</p>
-                      </div>
+
+            <div className="videos-display">
+              {Object.entries(
+                filteredVideos.reduce((acc, video) => {
+                  (acc[video.courseName] = acc[video.courseName] || []).push(video);
+                  return acc;
+                }, {})
+              ).map(([courseName, courseVideos]) => (
+                <div key={courseName} className="course-section">
+                  <h2 className="course-title">{courseName}</h2>
+
+                  {expandedCourses[courseName] ? (
+                    <div className="video-stack">
+                      {courseVideos.map(video => (
+                        <div key={video.videoId} className="video-card-modern">
+                          <iframe
+                            src={getEmbedVideoUrl(video.videoUrl)}
+                            frameBorder="0"
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                            className="video-embed"
+                          ></iframe>
+                          <h3 className="video-topic">{video.topic}</h3>
+                          <div className="video-meta">
+                            <div className="creator-info">
+                              <img src={video.creator.profileimageurl} alt="creator" />
+                              {video.creator.username}
+                            </div>
+                            <button 
+                              onClick={() => handleLike(video.videoId)} 
+                              className="like-btn"
+                            >
+                              👍 {video.likes.length}
+                            </button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="video-stats">
-                      <div className="stat-item">
-                        <FaVideo /> <span>{video.topic}</span>
-                      </div>
-                      <div className="stat-item">
-                        <FaBook /> <span>{video.courseName}</span>
-                      </div>
-                      <div className="stat-item">
-                        <FaRegClock /> <span>{video.createdAt}</span>
-                      </div>
-                      <div className="stat-item">
-                        <FaThumbsUp /> <span>{video.likes.length}</span>
-                      </div>
+                  ) : (
+                    <div className="video-carousel">
+                      {courseVideos.map(video => (
+                        <div key={video.videoId} className="video-card-modern">
+                          <iframe
+                            src={getEmbedVideoUrl(video.videoUrl)}
+                            frameBorder="0"
+                            allow="autoplay; encrypted-media"
+                            allowFullScreen
+                            className="video-embed"
+                          ></iframe>
+                          <h3 className="video-topic">{video.topic}</h3>
+                          <div className="video-meta">
+                            <div className="creator-info">
+                              <img src={video.creator.picture} alt="creator" />
+                              {video.creator.username}
+                            </div>
+                            <button 
+                              onClick={() => handleLike(video.videoId)} 
+                              className="like-btn"
+                            >
+                              👍 {video.likes.length}
+                            </button>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  </div>
-                  <div className="video-actions">
-                    <button onClick={() => handleLike(video.videoId)} className="like-button">
-                      👍 Like
-                    </button>
-                  </div>
+                  )}
+
+                  <button 
+                    className="view-more-btn"
+                    onClick={() => toggleViewMore(courseName)}
+                  >
+                    <FaEye /> {expandedCourses[courseName] ? "Show Less" : "View More"}
+                  </button>
                 </div>
               ))}
             </div>
+
+            <div className="right-sidebar">
+              <h2>Extra Tools</h2>
+              <p>Future widgets or suggested content can go here.</p>
+              <SidebarSmall/>
+              
+            </div>
+
           </div>
         </div>
       </div>

@@ -1,170 +1,212 @@
-.explainer-section {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border-radius: 10px;
+.explainer-main-container {
+  display: flex;
+  flex-direction: column;
+  background-color: #101828;
+  color: #F8FAFC;
+}
 
-  }
-  
-  .videos-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .video-card {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background-color: #fff;
-    padding: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .video-container iframe {
-    border-radius: 10px;
-  }
-  
-  .video-info {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .creator-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-  }
-  
-  .creator-profile-img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .creator-details h3 {
-    margin: 0;
-    font-size: 1.2em;
-  }
-  
-  .creator-role {
-    color: #888;
-    font-size: 0.9em;
-  }
-  
-  .video-stats {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9em;
-    color: #555;
-  }
-  
-  .stat-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  
-  .video-actions {
-    display: flex;
-    justify-content: flex-end;
-  }
-  
-  .like-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 16px;
-    cursor: pointer;
-  }
-  
-  .like-button:hover {
-    background-color: #0056b3;
-  }
-  .small-exp{
-    flex-direction: row;
-    display: flex;
-    margin-top: 9%;
+.sidebar-and-content {
+  display: flex;
+  margin-top: 40px;
+  height: calc(100vh - 20px); /* 90px to match sticky top of sidebars */
+}
 
-  }
+.explainer-content {
+  flex: 1;
+  padding: 20px;
+  /* overflow-y: auto; */
+}
 
-  .content-container {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .filter-column {
-    width: 250px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-  }
-  
-  .filter-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 18px;
-    color: #2a3d66;
-    margin-bottom: 15px;
-  }
-  
-  .filter-group {
-    margin-bottom: 20px;
-  }
-  
-  .filter-group h3 {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .filter-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .filter-list li {
-    padding: 8px 10px;
-    cursor: pointer;
-    border-radius: 3px;
-    color: #333;
-  }
-  
-  .filter-list li:hover,
-  .filter-list li.active-filter {
-    background-color: #2a3d66;
-    color: #fff;
-  }
-  
-  .filter-search {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .add-video-button {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    justify-content: center;
-    background-color: #2a3d66;
-    color: #fff;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .add-video-button:hover {
-    background-color: #0056b3;
-  }
-  
+.section-header {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.filter-and-search {
+  display: flex;
+  height: 100%;
+}
+
+.filters {
+  min-width: 250px;
+  padding-right: 20px;
+  background-color: #1D2939;
+  border-radius: 12px;
+  padding: 16px;
+  position: sticky;
+  top: 90px;
+  height: fit-content;
+}
+
+.filters h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #F8FAFC;
+}
+
+.filters ul {
+  list-style: none;
+  padding: 0;
+}
+
+.filters li {
+  cursor: pointer;
+  margin: 5px 0;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  color: #CBD5E1;
+}
+
+.filters li:hover,
+.active-filter {
+  background-color: #273549;
+  color: #F8FAFC;
+}
+
+.filters input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #273549;
+  color: #F8FAFC;
+}
+
+.add-video-btn {
+  margin-top: 20px;
+  background-color: #3b87d6;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-video-btn:hover {
+  background-color: #2b6fb8;
+}
+
+.videos-display {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 10px;
+}
+
+.course-section {
+  margin-bottom: 40px;
+}
+
+.course-title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #F8FAFC;
+}
+
+.video-carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding-bottom: 10px;
+}
+
+.video-card-modern {
+  background: #273549;
+  border-radius: 12px;
+  flex: 0 0 auto;
+  width: 300px;
+  padding: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.video-embed {
+  width: 100%;
+  height: 180px;
+  border-radius: 10px;
+}
+
+.video-topic {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 10px 0 5px;
+  color: #F8FAFC;
+}
+
+.video-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  color: #CBD5E1;
+}
+
+.creator-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.creator-info img {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.like-btn {
+  background: #3b87d6;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.like-btn:hover {
+  background: #2b6fb8;
+}
+
+.right-sidebar {
+  min-width: 250px;
+  padding-left: 20px;
+  background-color: #1D2939;
+  border-radius: 12px;
+  padding: 16px;
+  position: sticky;
+  top: 90px;
+  height: fit-content;
+}
+
+.view-more-btn {
+  background: #3b87d6;
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.view-more-btn:hover {
+  background: #2b6fb8;
+}
+
+.video-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 10px;
+}
