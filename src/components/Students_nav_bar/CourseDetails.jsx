@@ -74,29 +74,25 @@ const CourseDetails = () => {
         return;
       }
 
-      // Prepare FormData for the file upload
       const formData = new FormData();
 
-      // Add file if provided
       if (file) {
-        formData.append("file", file); // The file input field should match the backend handler's expected name
+        formData.append("file", file); 
       }
 
-      // Add pluginData for text submission and file draft area
-      const pluginData = {
+     const pluginData = {
         onlinetext_editor: {
-          text: textSubmission || "", // Add the text from the text area
-          format: 1, // Default format (Moodle's default is HTML = 1)
-          itemid: 0, // Set to 0 if no file is attached
+          text: textSubmission || "", 
+          format: 1,
+          itemid: 0, 
         },
-        files_filemanager: 0, // If a file is uploaded, this should match the draft area ID
+        files_filemanager: 0, 
       };
 
       formData.append("pluginData", JSON.stringify(pluginData));
 
       setUploading(true);
 
-      // Make the API call
       const response = await fetch(
         `http://localhost:3002/api/courses/submit/assignment/${selectedAssignment.id}`,
         {
@@ -151,8 +147,8 @@ const CourseDetails = () => {
   const closeAssignmentModal = () => {
     setIsModalOpen(false);
     setSelectedAssignment(null);
-    setTextSubmission(""); // Clear the text submission field
-    setFile(null); // Clear the file
+    setTextSubmission(""); 
+    setFile(null); 
   };
 
   useEffect(() => {
@@ -217,8 +213,14 @@ const CourseDetails = () => {
   }, [selectedAssignment]);
 
   const handleChatbotClick = () => {
-    navigate("/course-chatbot");
+    navigate("/course-chatbot", { 
+      state: { 
+        courseName: courseName, 
+        courseId: courseId 
+      }
+    });
   };
+  
 
   if (loading) {
     return <p className="loading">Loading course details...</p>;
@@ -274,7 +276,7 @@ const CourseDetails = () => {
                 {expandedSections[section.id] && section.modules?.length > 0 && (
                   <div className="module-list">
                     {section.modules.map((module) => (
-                      <div key={module.id} className="module-item">
+                      <div key={module.id} className="course-module-item">
                         {module.modname === "assign" ? (
                           <button
                             className="assignment-button"
