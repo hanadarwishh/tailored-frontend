@@ -8,11 +8,12 @@ import {
   FaFileDownload,
   FaUpload,
   FaComments,
-  FaClipboardList // Importing the summarization icon
+  FaClipboardList,
 } from "react-icons/fa";
 import Modal from "react-modal";
 import "./CourseDetails.css";
 import Navbar from "../NavBar/NavBar";
+import chatbotImage from '../Assets/chatbot_full-removebg-preview.png'; 
 
 Modal.setAppElement("#root");
 
@@ -29,7 +30,8 @@ const CourseDetails = () => {
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState("");
-  const [textSubmission, setTextSubmission] = useState(""); // Text for submission
+  const [textSubmission, setTextSubmission] = useState(""); 
+  const [showBubble, setShowBubble] = useState(true); 
 
   const courseId = location.state?.course?.id;
   const courseName = location.state?.course?.fullname;
@@ -214,6 +216,10 @@ const CourseDetails = () => {
     return () => clearInterval(intervalId);
   }, [selectedAssignment]);
 
+  const handleChatbotClick = () => {
+    navigate("/course-chatbot");
+  };
+
   if (loading) {
     return <p className="loading">Loading course details...</p>;
   }
@@ -240,132 +246,141 @@ const CourseDetails = () => {
 
   return (
     <div>
-        <Navbar/>
-    <div className="course-details-page">
-      <div className="course-header">
-        <h2>
-          <FaBook className="cd-icon" /> {courseName}
-        </h2>
-        <p>Explore the course details below:</p>
-      </div>
+      <Navbar />
+      <div className="course-details-page">
+        <div className="course-header">
+          <h2>
+            <FaBook className="cd-icon" /> {courseName}
+          </h2>
+          <p>Explore the course details below:</p>
+        </div>
 
-      <div className="sections-list">
-        {sections.length > 0 ? (
-          sections.map((section) => (
-            <div key={section.id} className="section-card">
-              
-            
-              <div
-                className="section-header"
-                onClick={() => toggleSection(section.id)}
-              >
-                <h4>
-                  <FaFolderOpen className="cd-icon" /> {section.name}
-                </h4>
-                <span>
-                  {expandedSections[section.id] ? <FaArrowUp /> : <FaArrowDown />}
-                </span>
-              </div>
-
-              {expandedSections[section.id] && section.modules?.length > 0 && (
-                <div className="module-list">
-                  {section.modules.map((module) => (
-                    <div key={module.id} className="module-item">
-                      {module.modname === "assign" ? (
-                        <button
-                          className="assignment-button"
-                          onClick={() => openAssignmentModal(module.id)}
-                        >
-                          <FaUpload className="red-icon" /> {module.name}
-                        </button>
-                      ) : module.modname === "forum" ? (
-                        <button
-                          className="forum-button"
-                          onClick={() => navigate("/discussion-forum", { state: { forumId: module.instance } })}
-                        >
-                          <FaComments className="blue-icon" /> {module.name}
-                        </button>
-                      ) : (
-                        <div>
-                          <div className="lecture-summarization-icon">
-                            <FaClipboardList 
-                              className="green-icon"
-                              onClick={() => navigate("/lecture-summarization")}
-                            />
-                          </div>
-                          <a
-                            href={module.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="module-link"
-                          >
-                            {module.name}
-                          </a>
-                          {module.contents?.length > 0 && (
-                            <div className="module-contents">
-                              {module.contents.map((content, index) => (
-                                <div key={index} className="content-item">
-                                  <a
-                                    href={`${content.fileurl}&token=2aa9cad85973d3790f2f6c467317c6ac`}
-                                    download
-                                    className="content-link"
-                                  >
-                                    <FaFileDownload /> {content.filename}
-                                  </a>
-                                  <p>Size: {content.filesize} bytes</p>
-                                </div>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+        <div className="sections-list">
+          {sections.length > 0 ? (
+            sections.map((section) => (
+              <div key={section.id} className="section-card">
+                <div
+                  className="section-header"
+                  onClick={() => toggleSection(section.id)}
+                >
+                  <h4>
+                    <FaFolderOpen className="cd-icon" /> {section.name}
+                  </h4>
+                  <span>
+                    {expandedSections[section.id] ? <FaArrowUp /> : <FaArrowDown />}
+                  </span>
                 </div>
-              )}
-            </div>
-          ))
-        ) : (
-          <p>No sections available for this course.</p>
-        )}
-      </div>
 
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeAssignmentModal}
-        contentLabel="Assignment Submission"
-        className="modal-content"
-        overlayClassName="modal-overlay"
-      >
-        <h3>{selectedAssignment?.name}</h3>
-        <p>Time remaining: {timeRemaining}</p>
+                {expandedSections[section.id] && section.modules?.length > 0 && (
+                  <div className="module-list">
+                    {section.modules.map((module) => (
+                      <div key={module.id} className="module-item">
+                        {module.modname === "assign" ? (
+                          <button
+                            className="assignment-button"
+                            onClick={() => openAssignmentModal(module.id)}
+                          >
+                            <FaUpload className="red-icon" /> {module.name}
+                          </button>
+                        ) : module.modname === "forum" ? (
+                          <button
+                            className="forum-button"
+                            onClick={() => navigate("/discussion-forum", { state: { forumId: module.instance } })}
+                          >
+                            <FaComments className="blue-icon" /> {module.name}
+                          </button>
+                        ) : (
+                          <div>
+                            <div className="lecture-summarization-icon">
+                              <FaClipboardList 
+                                className="green-icon"
+                                onClick={() => navigate("/lecture-summarization")}
+                              />
+                            </div>
+                            <a
+                              href={module.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="module-link"
+                            >
+                              {module.name}
+                            </a>
+                            {module.contents?.length > 0 && (
+                              <div className="module-contents">
+                                {module.contents.map((content, index) => (
+                                  <div key={index} className="content-item">
+                                    <a
+                                      href={`${content.fileurl}&token=2aa9cad85973d3790f2f6c467317c6ac`}
+                                      download
+                                      className="content-link"
+                                    >
+                                      <FaFileDownload /> {content.filename}
+                                    </a>
+                                    <p>Size: {content.filesize} bytes</p>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <p>No sections available for this course.</p>
+          )}
+        </div>
 
-        <textarea
-          placeholder="Enter text for submission (optional)"
-          value={textSubmission}
-          onChange={(e) => setTextSubmission(e.target.value)}
-          rows="4"
-          className="submission-textarea"
-        />
-
-        <div
-          className={`file-upload-area ${dragging ? "dragging" : ""}`}
-          onDrop={handleDrop}
-          onDragOver={handleDragOver}
-          onDragLeave={handleDragLeave}
+        <Modal
+          isOpen={isModalOpen}
+          onRequestClose={closeAssignmentModal}
+          contentLabel="Assignment Submission"
+          className="modal-content"
+          overlayClassName="modal-overlay"
         >
-          <p>{file ? file.name : "Drag and drop or browse to select a file"}</p>
-          <input type="file" onChange={handleFileChange} />
-        </div>
+          <h3>{selectedAssignment?.name}</h3>
+          <p>Time remaining: {timeRemaining}</p>
 
-        <div className="modal-actions">
-          <button onClick={submitAssignment} disabled={uploading}>
-            {uploading ? "Submitting..." : "Submit Assignment"}
-          </button>
-          <button onClick={closeAssignmentModal}>Close</button>
+          <textarea
+            placeholder="Enter text for submission (optional)"
+            value={textSubmission}
+            onChange={(e) => setTextSubmission(e.target.value)}
+            rows="4"
+            className="submission-textarea"
+          />
+
+          <div
+            className={`file-upload-area ${dragging ? "dragging" : ""}`}
+            onDrop={handleDrop}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+          >
+            <p>{file ? file.name : "Drag and drop or browse to select a file"}</p>
+            <input type="file" onChange={handleFileChange} />
+          </div>
+
+          <div className="modal-actions">
+            <button onClick={submitAssignment} disabled={uploading}>
+              {uploading ? "Submitting..." : "Submit Assignment"}
+            </button>
+            <button onClick={closeAssignmentModal}>Close</button>
+          </div>
+        </Modal>
+
+        <div className="chatbot-container" onClick={handleChatbotClick}>
+          <div className={`chatbot-bubble ${showBubble ? 'show' : ''}`}>
+            <p>I'm here to help! How can I assist you with your course?</p>
+          </div>
+          <img
+            src={chatbotImage}
+            alt="Chatbot"
+            className="chatbot-image"
+          />
         </div>
-      </Modal>
-    </div>
+      </div>
     </div>
   );
 };

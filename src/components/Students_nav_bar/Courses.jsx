@@ -6,6 +6,8 @@ import studentPic from "../Assets/student_pic.jpg";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../NavBar/NavBar";
 import SidebarPage from "./Sidenav/Sidenav";
+import chatbotImage from '../Assets/chatbot_full-removebg-preview.png'; 
+
 
 const Courses = () => {
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ const Courses = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [showBubble, setShowBubble] = useState(true); 
+  
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const TOKEN = userData.token;
 
@@ -128,10 +132,16 @@ const Courses = () => {
         </div>
       </div>
 
-      {/* Chatbot Icon */}
-      <div className="chatbot-icon" onClick={handleChatbotClick}>
-        <FontAwesomeIcon icon={faCommentDots} className="chatbot-icon-style" />
-      </div>
+     <div className="chatbot-container" onClick={handleChatbotClick}>
+          <div className={`chatbot-bubble ${showBubble ? 'show' : ''}`}>
+            <p>I'm here to help! How can I assist you with your course?</p>
+          </div>
+          <img
+            src={chatbotImage}
+            alt="Chatbot"
+            className="chatbot-image"
+          />
+        </div>
     </div>
   );
 };

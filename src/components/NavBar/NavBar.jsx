@@ -12,6 +12,8 @@ const Navbar = () => {
   // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("userData"); // Clear user data
+    localStorage.clear();
+
     window.location.href = "/login"; // Redirect to login page
   };
 

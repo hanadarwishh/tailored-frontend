@@ -600,3 +600,34 @@ body, html {
 .chatbot-icon:hover {
   background-color: #0073e6; /* Darker blue on hover */
 }
+.chatbot-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chatbot-bubble {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.chatbot-icon {
+  font-size: 30px;
+  background-color: #4c8bfc;
+  color: white;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.chatbot-icon:hover + .chatbot-bubble {
+  display: block;
+}
