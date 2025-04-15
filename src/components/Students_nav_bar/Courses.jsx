@@ -134,7 +134,7 @@ const Courses = () => {
 
      <div className="chatbot-container" onClick={handleChatbotClick}>
           <div className={`chatbot-bubble ${showBubble ? 'show' : ''}`}>
-            <p>I'm here to help! How can I assist you with your course?</p>
+            <p>Upload ANY file for help! The chatbot can assist you with anything.</p>
           </div>
           <img
             src={chatbotImage}
