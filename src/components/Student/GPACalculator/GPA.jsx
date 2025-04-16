@@ -25,25 +25,6 @@ function GPA() {
     setIsSidebarCollapsed(collapsed);
   };
 
-  // uncomment it
-
-  // useEffect(() => {
-  //   const userData = JSON.parse(localStorage.getItem("userData")) || {};
-  //   const studentId = userData.userid;
-  //   if (studentId) {
-  //     fetch(`http://localhost:5001/api/gpa/${studentId}`)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         setCurrentGPA(data.currentGPA || '');
-  //         setTotalCredits(data.totalCredits || '');
-  //         setCourses(data.courses || [{ name: '', grade: '', credits: '' }]);
-  //       })
-  //       .catch((error) => console.error('Error fetching GPA data:', error))
-  //       .finally(() => setLoading(false));
-  //   }
-  // }, []);
-
-  // Remove it
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const studentId = userData.userid;
@@ -94,144 +75,140 @@ function GPA() {
 
   // uncomment it
 
-  // const handleCalcGPA = async () => {
-  //   const userData = JSON.parse(localStorage.getItem("userData")) || {};
-  //   const studentId = userData.userid;
+  const handleCalcGPA = async () => {
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};
+    const studentId = userData.userid;
+  
+    // Input validation
+    if (!studentId) {
+      setErrors("Student ID not found. Please log in again.");
+      return;
+    }
+  
+    if (!currentGPA || isNaN(currentGPA)) {
+      setErrors("Please enter a valid current GPA.");
+      return;
+    }
+  
+    if (!totalCredits || isNaN(totalCredits)) {
+      setErrors("Please enter valid total credits.");
+      return;
+    }
+  
+    for (let i = 0; i < courses.length; i++) {
+      const { name, grade, credits } = courses[i];
+      if (!name || !grade || !credits || isNaN(credits)) {
+        setErrors(`Please fill all fields correctly for Course ${i + 1}.`);
+        return;
+      }
+    }
+  
+    const dataToSend = {
+      currentGPA: parseFloat(currentGPA),
+      totalCredits: parseFloat(totalCredits),
+      courses: courses.map((course) => ({
+        name: course.name,
+        grade: course.grade,
+        credits: parseFloat(course.credits),
+      })),
+    };
 
-  //   try {
-  //     const response = await fetch(
-  //       `http://localhost:5001/api/gpa/${studentId}`,
-  //       {
-  //         method: "GET",
-  //       }
-  //     );
-
-  //     if (!response.ok) {
-  //       if (studentId) {
-  //         const dataToSend = {
-  //           currentGPA: parseFloat(currentGPA),
-  //           totalCredits: parseFloat(totalCredits),
-  //           courses: courses.map((course) => ({
-  //             name: course.name,
-  //             grade: course.grade,
-  //             credits: parseFloat(course.credits),
-  //           })),
-  //         };
-
-  //         fetch(`http://localhost:5001/api/gpa/${studentId}`, {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify(dataToSend),
-  //         })
-  //           .then((response) => response.json())
-  //           .then((data) => {
-  //             console.log("GPA calculation data sent:", data);
-  //             setNewGPA(data.newGPA);
-  //           })
-  //           .catch((error) => {
-  //             console.error("Error posting GPA data:", error);
-  //           });
-  //       }
-  //     }
-
-  //     if (studentId) {
-  //       const dataToSend = {
-  //         currentGPA: parseFloat(currentGPA),
-  //         totalCredits: parseFloat(totalCredits),
-  //         courses: courses.map((course) => ({
-  //           name: course.name,
-  //           grade: course.grade,
-  //           credits: parseFloat(course.credits),
-  //         })),
-  //       };
-
-  //       fetch(`http://localhost:5001/api/gpa/${studentId}`, {
-  //         method: "PATCH",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(dataToSend),
-  //       })
-  //         .then((response) => response.json())
-  //         .then((data) => {
-  //           console.log("GPA calculation data sent:", data);
-  //           setNewGPA(data.newGPA);
-  //         })
-  //         .catch((error) => {
-  //           console.error("Error posting GPA data:", error);
-  //         });
-  //     }
-  //   } catch (err) {
-  //     console.error(err.message || "An unexpected error occurred.");
-  //   }
-  // };
+    // try this
+  
+    try {
+      setErrors("");
+  
+      const getResponse = await fetch(`http://localhost:5001/api/gpa/${studentId}`, {
+        method: "GET",
+      });
+  
+      const method = getResponse.ok ? "PATCH" : "POST";
+  
+      const saveResponse = await fetch(`http://localhost:5001/api/gpa/${studentId}`, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dataToSend),
+      });
+  
+      if (!saveResponse.ok) {
+        const errData = await saveResponse.json();
+        throw new Error(errData.message || `Failed to ${method} GPA data.`);
+      }
+  
+      const responseData = await saveResponse.json();
+      setNewGPA(responseData.newGPA);
+    } catch (error) {
+      console.error("Error calculating GPA:", error);
+    }
+  };
+  
 
   // remove it
 
-  const gradePointMap = {
-    "A+": 4.0,
-    A: 4.0,
-    "A-": 3.7,
-    "B+": 3.3,
-    B: 3.0,
-    "B-": 2.7,
-    "C+": 2.3,
-    C: 2.0,
-    "C-": 1.7,
-    "D+": 1.3,
-    D: 1.0,
-    "D-": 0.7,
-    F: 0.0,
-  };
+  // const gradePointMap = {
+  //   "A+": 4.0,
+  //   A: 4.0,
+  //   "A-": 3.7,
+  //   "B+": 3.3,
+  //   B: 3.0,
+  //   "B-": 2.7,
+  //   "C+": 2.3,
+  //   C: 2.0,
+  //   "C-": 1.7,
+  //   "D+": 1.3,
+  //   D: 1.0,
+  //   "D-": 0.7,
+  //   F: 0.0,
+  // };
 
-  const handleCalcGPA = () => {
-    let totalNewGradePoints = 0;
-    let newErrors = { gpa: "", credits: "", grades: "" };
-    let totalNewCredits = 0;
+  // const handleCalcGPA = () => {
+  //   let totalNewGradePoints = 0;
+  //   let newErrors = { gpa: "", credits: "", grades: "" };
+  //   let totalNewCredits = 0;
 
-    for (const course of courses) {
-      const grade = course.grade;
-      const credits = parseFloat(course.credits);
+  //   for (const course of courses) {
+  //     const grade = course.grade;
+  //     const credits = parseFloat(course.credits);
 
-      if (!grade || isNaN(credits)) continue;
+  //     if (!grade || isNaN(credits)) continue;
 
-      const gradePoint = gradePointMap[grade];
-      totalNewCredits += credits;
-      totalNewGradePoints += gradePoint * credits;
-    }
+  //     const gradePoint = gradePointMap[grade];
+  //     totalNewCredits += credits;
+  //     totalNewGradePoints += gradePoint * credits;
+  //   }
 
-    const currentGPAValue = parseFloat(currentGPA);
-    const currentCreditsValue = parseFloat(totalCredits);
+  //   const currentGPAValue = parseFloat(currentGPA);
+  //   const currentCreditsValue = parseFloat(totalCredits);
 
-    if (isNaN(currentGPAValue) || currentGPAValue === "") {
-      newErrors.gpa = "Please enter a valid GPA";
-    }
+  //   if (isNaN(currentGPAValue) || currentGPAValue === "") {
+  //     newErrors.gpa = "Please enter a valid GPA";
+  //   }
 
-    if (isNaN(currentCreditsValue) || currentCreditsValue === "") {
-      newErrors.credits = "Please enter valid credits";
-    }
+  //   if (isNaN(currentCreditsValue) || currentCreditsValue === "") {
+  //     newErrors.credits = "Please enter valid credits";
+  //   }
 
-    if (totalNewCredits === 0) {
-      newErrors.grades = "Please enter valid course grades";
-    }
+  //   if (totalNewCredits === 0) {
+  //     newErrors.grades = "Please enter valid course grades";
+  //   }
 
-    setErrors(newErrors);
+  //   setErrors(newErrors);
 
-    const hasErrors = Object.values(newErrors).some((msg) => msg !== "");
-    if (!hasErrors) {
-      const newGPAValue =
-        (currentGPAValue * currentCreditsValue + totalNewGradePoints) /
-        (currentCreditsValue + totalNewCredits);
+  //   const hasErrors = Object.values(newErrors).some((msg) => msg !== "");
+  //   if (!hasErrors) {
+  //     const newGPAValue =
+  //       (currentGPAValue * currentCreditsValue + totalNewGradePoints) /
+  //       (currentCreditsValue + totalNewCredits);
 
-      const roundedGPA = newGPAValue.toFixed(2);
-      setNewGPA(roundedGPA);
-    }
-  };
+  //     const roundedGPA = newGPAValue.toFixed(2);
+  //     setNewGPA(roundedGPA);
+  //   }
+  // };
 
   if (loading) {
-    return <LoadingScreen title="GPA Calculator is Loading" />;
+    return <LoadingScreen title="Loading GPA Calculator" />;
   }
 
   const radius = 80;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { FaPlusCircle, FaComments } from "react-icons/fa";
 import "./DiscussionForum.css";
+import LoadingScreen from "../../../../Loading/LoadingScreen";
 
 const DiscussionForum = () => {
   const location = useLocation();
@@ -41,7 +42,7 @@ const DiscussionForum = () => {
   }, [forumId, TOKEN]);
 
   if (loading) {
-    return <p className="loading">Loading discussion topics...</p>;
+    return <LoadingScreen title="Loading Discussion Topics" />;
   }
 
   if (error) {

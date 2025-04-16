@@ -19,96 +19,97 @@ import Navbar from "../../../UpperNavBar/NavBar";
 import chatbotImage from "../../../Assets/chatbot_full-removebg-preview.png";
 import LoadingScreen from "../../../Loading/LoadingScreen";
 
-const mockCourseData = {
-  courses: [
-    {
-      id: 1,
-      name: "Week 1",
-      modules: [
-        {
-          id: 101,
-          name: "Lecture 1",
-          modname: "resource",
-          url: "https://example.com/lecture1",
-          contents: [
-            {
-              filename: "Lecture1.pdf",
-              fileurl: "https://example.com/files/lecture1.pdf",
-              filesize: 123456,
-            },
-          ],
-        },
-        {
-          id: 102,
-          name: "Assignment 1",
-          modname: "assign",
-        },
-        {
-          id: 103,
-          name: "Discussion 1",
-          modname: "forum",
-          instance: 12,
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Week 2",
-      modules: [
-        {
-          id: 101,
-          name: "Lecture 2",
-          modname: "resource",
-          url: "https://example.com/lecture1",
-          contents: [
-            {
-              filename: "Lecture2a.pdf",
-              fileurl: "https://example.com/files/lecture1.pdf",
-              filesize: 123456,
-            },
-            {
-              filename: "Lecture2b.pdf",
-              fileurl: "https://example.com/files/lecture2.pdf",
-              filesize: 21,
-            },
-          ],
-        },
-        {
-          id: 102,
-          name: "Assignment 1",
-          modname: "assign",
-        },
-        {
-          id: 103,
-          name: "Discussion 1",
-          modname: "forum",
-          instance: 12,
-        },
-      ],
-    },
-  ],
-};
+// const mockCourseData = {
+//   courses: [
+//     {
+//       id: 1,
+//       name: "Week 1",
+//       modules: [
+//         {
+//           id: 101,
+//           name: "Lecture 1",
+//           modname: "resource",
+//           url: "https://example.com/lecture1",
+//           contents: [
+//             {
+//               filename: "Lecture1.pdf",
+//               fileurl: "https://example.com/files/lecture1.pdf",
+//               filesize: 123456,
+//             },
+//           ],
+//         },
+//         {
+//           id: 102,
+//           name: "Assignment 1",
+//           modname: "assign",
+//         },
+//         {
+//           id: 103,
+//           name: "Discussion 1",
+//           modname: "forum",
+//           instance: 12,
+//         },
+//       ],
+//     },
+//     {
+//       id: 2,
+//       name: "Week 2",
+//       modules: [
+//         {
+//           id: 101,
+//           name: "Lecture 2",
+//           modname: "resource",
+//           url: "https://example.com/lecture1",
+//           contents: [
+//             {
+//               filename: "Lecture2a.pdf",
+//               fileurl: "https://example.com/files/lecture1.pdf",
+//               filesize: 123456,
+//             },
+//             {
+//               filename: "Lecture2b.pdf",
+//               fileurl: "https://example.com/files/lecture2.pdf",
+//               filesize: 21,
+//             },
+//           ],
+//         },
+//         {
+//           id: 102,
+//           name: "Assignment 1",
+//           modname: "assign",
+//         },
+//         {
+//           id: 103,
+//           name: "Discussion 1",
+//           modname: "forum",
+//           instance: 12,
+//         },
+//       ],
+//     },
+//   ],
+// };
 
-const mockAssignmentData = {
-  courses: {
-    assignments: [
-      {
-        id: 555,
-        name: "Assignment 1",
-        duedate: "May 17, 2025",
-        opened: "May 15, 2025",
-        description: "Complete Assignment 1 following the instructions provided in the course materials.",
-        title: "Assignment 1: Introduction to Course Concepts",
-      },
-    ],
-  },
-};
+// const mockAssignmentData = {
+//   courses: {
+//     assignments: [
+//       {
+//         id: 555,
+//         name: "Assignment 1",
+//         duedate: "May 17, 2025",
+//         opened: "May 15, 2025",
+//         description: "Complete Assignment 1 following the instructions provided in the course materials.",
+//         title: "Assignment 1: Introduction to Course Concepts",
+//       },
+//     ],
+//   },
+// };
 
 const CourseDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [course, setCourse] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [expandedSections, setExpandedSections] = useState({});
   const [selectedAssignment, setSelectedAssignment] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -119,6 +120,8 @@ const CourseDetails = () => {
 
   const courseId = location.state?.course?.id || 1;
   const courseName = location.state?.course?.fullname || "Mock Course";
+  const userData = JSON.parse(localStorage.getItem("userData")) || {};
+  const TOKEN = userData.token;
 
   const toggleSection = (sectionId) => {
     setExpandedSections((prev) => ({
@@ -149,24 +152,101 @@ const CourseDetails = () => {
     setDragging(false);
   };
 
-  const submitAssignment = async () => {
-    if (!file) {
-      alert("Please select a file for submission.");
-      return;
-    }
+  // const submitAssignment = async () => {
+  //   if (!file) {
+  //     alert("Please select a file for submission.");
+  //     return;
+  //   }
 
-    setUploading(true);
-    setTimeout(() => {
-      alert("Assignment submitted successfully!");
-      closeAssignmentModal();
+  //   setUploading(true);
+  //   setTimeout(() => {
+  //     alert("Assignment submitted successfully!");
+  //     closeAssignmentModal();
+  //     setUploading(false);
+  //   }, 1500);
+  // };
+
+  const submitAssignment = async () => {
+    try {
+      if (!file) {
+        alert("Please provide a text or file for submission.");
+        return;
+      }
+
+      const formData = new FormData();
+
+      if (file) {
+        formData.append("file", file); 
+      }
+
+     const pluginData = {
+        onlinetext_editor: {
+          text: "", 
+          format: 1,
+          itemid: 0, 
+        },
+        files_filemanager: 0, 
+      };
+
+      formData.append("pluginData", JSON.stringify(pluginData));
+
+      setUploading(true);
+
+      const response = await fetch(
+        `http://localhost:3002/api/courses/submit/assignment/${selectedAssignment.id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          },
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        alert("Assignment submitted successfully!");
+        closeAssignmentModal();
+      } else {
+        const error = await response.json();
+        throw new Error(error.message || "Failed to submit the assignment.");
+      }
+    } catch (error) {
+      console.error("Error submitting assignment:", error);
+      alert("An error occurred during submission. Please try again.");
+    } finally {
       setUploading(false);
-    }, 1500);
+    }
   };
 
-  const openAssignmentModal = () => {
-    const assign = mockAssignmentData.courses.assignments[0];
-    setSelectedAssignment(assign);
-    setIsModalOpen(true);
+  // const openAssignmentModal = () => {
+  //   const assign = mockAssignmentData.courses.assignments[0];
+  //   setSelectedAssignment(assign);
+  //   setIsModalOpen(true);
+  // };
+
+  const openAssignmentModal = async (assignid) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3002/api/courses/assignment/${courseId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch assignment details");
+      }
+
+      const data = await response.json();
+      const assign = data.courses.assignments[0];
+      setSelectedAssignment(assign);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching assignment details:", error);
+    }
   };
 
   const closeAssignmentModal = () => {
@@ -175,23 +255,70 @@ const CourseDetails = () => {
     setFile(null);
   };
 
-  useEffect(() => {
-    const courseData = mockCourseData;
-    setCourse(courseData);
+  // useEffect(() => {
+  //   const courseData = mockCourseData;
+  //   setCourse(courseData);
 
-    const initialExpanded = {};
-    courseData.courses.forEach((section) => {
-      initialExpanded[section.id] = true;
-    });
-    setExpandedSections(initialExpanded);
-    setLoading(false);
-  }, []);
+  //   const initialExpanded = {};
+  //   courseData.courses.forEach((section) => {
+  //     initialExpanded[section.id] = true;
+  //   });
+  //   setExpandedSections(initialExpanded);
+  //   setLoading(false);
+  // }, []);
+
+  useEffect(() => {
+    if (courseId) {
+      const fetchCourseDetails = async () => {
+        try {
+          const response = await fetch(
+            `http://localhost:3002/api/courses/${courseId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${TOKEN}`,
+              },
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error("Failed to fetch course details");
+          }
+
+          const data = await response.json();
+          setCourse(data);
+
+          const initialExpandedSections = data.courses.reduce((acc, section) => {
+            acc[section.id] = true;
+            return acc;
+          }, {});
+
+          setExpandedSections(initialExpandedSections);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchCourseDetails();
+    }
+  }, [courseId]);
 
   useEffect(() => {
     const calculateTimeRemaining = () => {
       if (selectedAssignment?.duedate) {
-        // Mock calculation since duedate is a string in our mock data
-        setTimeRemaining("48h 30m 15s");
+        const dueDate = new Date(selectedAssignment.duedate * 1000);
+        const now = new Date();
+        const timeDiff = dueDate - now;
+
+        if (timeDiff > 0) {
+          const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+          const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+          setTimeRemaining(`${hours}h ${minutes}m ${seconds}s`);
+        } else {
+          setTimeRemaining("Time's up!");
+        }
       }
     };
 
@@ -238,7 +365,7 @@ const CourseDetails = () => {
     });
   };
 
-  if (loading) return <LoadingScreen title="Loading course details..." />;
+  if (loading) return <LoadingScreen title="Loading Course Details" />;
   if (!course) return <div className="error"><p>No course found.</p></div>;
 
   const sections = course.courses || [];

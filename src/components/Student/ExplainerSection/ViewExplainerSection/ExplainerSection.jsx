@@ -5,6 +5,7 @@ import { FaEye, FaThumbsUp, FaUser, FaVideo, FaRegClock, FaBook, FaFilter, FaPlu
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../../UpperNavBar/NavBar";
 import SidebarPage from "../../../SideBar/Sidenav";
+import LoadingScreen from "../../../Loading/LoadingScreen";
 
 
 const ExplainerSection = ({ courseId, userId }) => {
@@ -106,8 +107,7 @@ const ExplainerSection = ({ courseId, userId }) => {
     }));
   };
 
-  if (loading) return <p>Loading videos...</p>;
-
+  if (loading) return <LoadingScreen title="Loading Videos" />
   return (
     <div className="explainer-main-container">
       <Navbar />

@@ -36,76 +36,76 @@ const Courses = () => {
     setSidebarCollapsed(collapsed);
   };
 
-  // // Fetch courses from backend
-  // useEffect(() => {
-  //   const fetchCourses = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const response = await fetch("http://localhost:3002/api/courses", {
-  //         headers: {
-  //           Authorization: `Bearer ${TOKEN}`,
-  //         },
-  //       });
-
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch courses");
-  //       }
-
-  //       const data = await response.json();
-  //       setCourses(data.courses || []);
-  //     } catch (err) {
-  //       setError(err.message);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchCourses();
-  // }, []);
-
+  // Fetch courses from backend
   useEffect(() => {
-    if (courses.length === 0) {
-      // Static example data for preview
-      setCourses([
-        {
-          id: "static1",
-          fullname: "Introduction to AI",
-          courseimage: "https://placehold.co/600x400?text=Introduction+to+AI",
-          progress: 75,
-        },
-        {
-          id: "static2",
-          fullname: "Web Development Basics",
-          courseimage: "https://placehold.co/600x400?text=Web+Development+Basics",
-          progress: 100,
-        },
-        {
-          id: "static3",
-          fullname: "Data Structures",
-          courseimage: "https://placehold.co/600x400?text=Data+Structures",
-          progress: 90,
-        },
-        {
-          id: "static1",
-          fullname: "Introduction to AI",
-          courseimage: "https://placehold.co/600x400?text=Introduction+to+AI",
-          progress: 10,
-        },
-        {
-          id: "static2",
-          fullname: "Web Development Basics",
-          courseimage: "https://placehold.co/600x400?text=Web+Development+Basics",
-          progress: 45,
-        },
-        {
-          id: "static3",
-          fullname: "Data Structures",
-          courseimage: "https://placehold.co/600x400?text=Data+Structures",
-          progress: 55,
-        },
-      ]);
-    }
-  }, [courses]);
+    const fetchCourses = async () => {
+      setLoading(true);
+      try {
+        const response = await fetch("http://localhost:3002/api/courses", {
+          headers: {
+            Authorization: `Bearer ${TOKEN}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch courses");
+        }
+
+        const data = await response.json();
+        setCourses(data.courses || []);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  // useEffect(() => {
+  //   if (courses.length === 0) {
+  //     // Static example data for preview
+  //     setCourses([
+  //       {
+  //         id: "static1",
+  //         fullname: "Introduction to AI",
+  //         courseimage: "https://placehold.co/600x400?text=Introduction+to+AI",
+  //         progress: 75,
+  //       },
+  //       {
+  //         id: "static2",
+  //         fullname: "Web Development Basics",
+  //         courseimage: "https://placehold.co/600x400?text=Web+Development+Basics",
+  //         progress: 100,
+  //       },
+  //       {
+  //         id: "static3",
+  //         fullname: "Data Structures",
+  //         courseimage: "https://placehold.co/600x400?text=Data+Structures",
+  //         progress: 90,
+  //       },
+  //       {
+  //         id: "static1",
+  //         fullname: "Introduction to AI",
+  //         courseimage: "https://placehold.co/600x400?text=Introduction+to+AI",
+  //         progress: 10,
+  //       },
+  //       {
+  //         id: "static2",
+  //         fullname: "Web Development Basics",
+  //         courseimage: "https://placehold.co/600x400?text=Web+Development+Basics",
+  //         progress: 45,
+  //       },
+  //       {
+  //         id: "static3",
+  //         fullname: "Data Structures",
+  //         courseimage: "https://placehold.co/600x400?text=Data+Structures",
+  //         progress: 55,
+  //       },
+  //     ]);
+  //   }
+  // }, [courses]);
 
   const handleSearchChange = (e) => {
     const value = e.target.value;

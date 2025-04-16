@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "./MyProfile.css";
 import Navbar from "../../UpperNavBar/NavBar";
 import SidebarPage from "../../SideBar/Sidenav";
+import LoadingScreen from "../../Loading/LoadingScreen";
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ const MyProfile = () => {
     navigate(`/edit-video/${videoId}`);
   };
 
-  if (loading) return <p>Loading your videos...</p>;
+  if (loading) return <LoadingScreen title="Loading your Videos" />;
 
   return (
     <div className="sidenavbar-small-profile">
