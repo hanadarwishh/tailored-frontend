@@ -1,170 +1,14 @@
-/* Reset body and html margins and paddings */
-body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  font-family: 'Roboto', Arial, sans-serif; /* Modern font */
-}
-
-/* Top Navbar */
-.top-navbar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 100%;
-  position: fixed;
-  background: linear-gradient(135deg, #0056b3, #3b87d6); /* Consistent blue theme */
-  padding: 10px 20px;
-  color: white;
-  border-bottom: 2px solid #004080;
-  left: 0;
-  top: 0;
-  /* z-index: 1000; */
-}
-
-
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  z-index: 10000;
-  margin-right: 80px;
-}
-
-.search-bar {
-  width: 300px;
-  padding: 10px;
-  border-radius: 20px; /* Rounded edges */
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.add-button {
-  background: linear-gradient(135deg, #4caf50, #66bb6a);
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  font-size: 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.add-button:hover {
-  background: #43a047;
-}
-
-
-.student-info-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  
-}
-
-.student-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.student-name {
-  font-weight: bold;
-  margin: 0;
-}
-
-.student-year {
-  font-size: 12px;
-  color: #f9f8f8;
-  margin: 0;
-}
-.student-pic-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px; /* Adjust size as needed */
-  height: 50px; /* Match width for a perfect circle */
-  border-radius: 50%;
-  overflow: hidden; /* Ensures the image fits within the circle */
-  border: 2px solid #ccc; /* Optional: Add a border around the circle */
-}
-
-.student-pic {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensures the image scales and fits properly */
-}
-
-
-.user-dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.user-icon {
-  cursor: pointer;
-  font-size: 24px;
-}
-
-.user-dropdown {
-  position: relative;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.dropdown-icon {
-  margin-left: 5px;
-  cursor: pointer;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  z-index: 1000;
-}
-
-.dropdown-menu button {
-  background: none;
-  border: none;
-  color: #2a3d66;
-  font-size: 1rem;
-  cursor: pointer;
-  width: 100%;
-  text-align: left;
-  padding: 5px 10px;
-  transition: background-color 0.2s;
-}
-
-.dropdown-menu button:hover {
-  background-color: #f0f0f0;
-}
-
-
-/* General Courses Page Styles */
 .courses-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 20px;
   text-align: center;
-  margin-top: 80px;
-  color: #333;
-  background: #f0f4f8; /* Subtle background color */
-  border-radius: 10px;
-  margin-left: 30%;
-  width: 70%
+  margin-top: 50px;
+  background-color: #f5f7fa;
+  width: 70%;
+  padding: 90px 30px 30px;
+  transition: margin-left 0.7s;
+  margin-left: 270px;
+  overflow-y: auto;
 }
-/* Course Grid */
+
 .course-list ul {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -174,16 +18,12 @@ body, html {
   margin: 0;
   list-style: none;
 }
-.course-side{
-  /* width: 40px */
-}
 
 .course-item {
-  
   background: white;
-  color: #fff; /* Ensures text is readable on colored backgrounds */
-  padding: 15px; /* Adds some spacing inside the container */
-  border: 1px solid #ddd;
+  color: #fff; 
+  padding: 15px;
+  border: 2px solid #ddd;
   border-radius: 10px;
   text-align: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -195,11 +35,10 @@ body, html {
   box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-
 .course-item h3 {
   font-size: 20px;
   margin-bottom: 10px;
-  color: #0056b3;
+  color: #2a3d66;
 }
 
 .course-item p {
@@ -208,343 +47,16 @@ body, html {
   margin-bottom: 20px;
 }
 
-.details-button {
-  background: linear-gradient(135deg, #0056b3, #3b87d6);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.details-button:hover {
-  background-color: rgb(49, 94, 210); /* Solid on hover */
-}
-
-.course-details {
-  margin-top: 20px;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.course-details h2 {
-  font-size: 26px;
-  color: #0056b3;
-}
-
-.course-details p {
-  font-size: 16px;
-  color: #555;
-}
-
-.course-options {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.option-button {
-  background: linear-gradient(135deg, #3b498c, #5c73d3); 
-
-  color: white; /* Ensures text contrast */
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  border-radius: 8px; /* Slightly more rounded for modern look */
-  cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds depth */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
-}
-
-.option-button:hover {
-  background: #315ed2; /* Solid blue for hover effect */
-  transform: scale(1.05); /* Slight zoom-in effect */
-}
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 8000000;
-}
-
-.modal-container {
-  background: #fff;
-  border-radius: 8px;
-  width: 400px;
-  margin-top: 20px;
-  max-width: 90%;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.modal-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.modal-body {
-  margin-top: 10px;
-}
-.file-name {
-  font-size: 0.9rem;
-  color: #333;
-  margin-top: 5px;
-  text-align: center;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-.file-upload-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.custom-file-button {
-  background-color: #28a745;
-  color: #fff;
-  padding: 10px 15px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.custom-file-button:hover {
-  background-color: #178b42;
-}
-
-.file-input {
-  display: none; /* Hide the default input */
-}
-
-.submit_assignment-button {
-  background-color: #3b498c;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 15px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.submit_assignment-button:hover {
-  background-color: #315ed2;
-}
-
-.cancel_submit-button {
-  background-color:  #dc3545;
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 15px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.cancel_submit-button:hover {
-  background-color: #c82333;
-}
-
-.back-button {
-  background: linear-gradient(135deg, #dc3545, #e57373);
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 14px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.back-button:hover {
-  background: #c82333;
-}
-.quizzes-page {
-  text-align: center;
-  padding: 20px;
-}
-
-.quiz-placeholder {
-  margin: 50px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.quiz-details-container {
-  max-width: 500px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  flex-direction: column; /* Stack buttons vertically */
-  gap: 15px; /* Add space between buttons */
-  align-items: center; /* Center buttons */
-}
-
-.quiz-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-.attempt_quiz-button {
-  background-color: #88b04b;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-right: 10px;
-}
-
-.attempt_quiz-button:hover {
-  background-color: #76a13e;
-  transform: scale(1.05);
-}
-
-.quiz-description {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 20px;
-}
-.cancel_attempt-button {
-  background: linear-gradient(135deg, #e53935, #d32f2f); /* Red gradient for cancel */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  margin-right: 5px;
-}
-
-.cancel_attempt-button:hover {
-  background: #c62828; /* Solid red on hover */
-  transform: scale(1.05); /* Slight zoom-in effect */
-}
-
-/* Search Dropdown Styles */
-.search-container {
-  position: relative;
-  display: inline-block;
-}
-
-.search-dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  background-color: white;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  list-style: none;
-  padding: 0;
-  margin: 5px 0 0;
-}
-
-.dropdown-item {
-  padding: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  color: #333;
-}
-
-.dropdown-item:hover {
-  background-color: #f0f0f0;
-}
-
-.add-course-form {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  z-index: 1001;
-  width: 400px;
-  text-align: center;
-}
-
-.add-course-form input {
-  width: 90%;
-  margin: 10px 0;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.save-button,
-.cancel-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  margin: 10px 5px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.save-button {
-  background-color: #28a745;
-  color: white;
-}
-
-.cancel-button {
-  background-color: #dc3545;
-  color: white;
-}
-
-.save-button:hover {
-  background-color: #218838;
-}
-
-.cancel-button:hover {
-  background-color: #c82333;
-}
-
 .progress-container {
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
 }
 
 .progress-bar {
   height: 10px;
-  background-color: skyblue;
+  background-color: #00a8e8;
   border-radius: 5px;
   width: 0;
   transition: width 0.5s ease-in-out;
@@ -553,43 +65,60 @@ body, html {
 .progress-percentage {
   margin-left: 10px;
   font-weight: bold;
-  color: #333;
+  color: #2a3d66;
 }
+
 .course-bar {
-  height: 50px; /* You can adjust the height as per your design */
+  height: 50px; 
   width: 100%;
   border-radius: 60px;
   align-items: center;
-  margin-bottom: 10px; /* Space between the bar and course name */
+  margin-bottom: 10px; 
 }
+
 .course-image-container {
   width: 100%;
-  height: 200px; /* Adjust as necessary */
+  height: 200px; 
   overflow: hidden;
 }
 
 .course-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; 
 }  
-.course-sidebar{
-  flex-direction: row;
-  display: flex;
-  margin-top: 6%
-}
-
 
 .chatbot-icon {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #0084ff; /* Blue background */
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  padding: 15px;
+  border: 2px solid #2a3d66;
+  overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chatbot-icon:hover {
+  bottom: 30px;
+  right: 30px;
+  width: 80px;
+  height: 80px;
+  transition: transform 0.3s ease;
+}
+
+.chatbot-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .chatbot-icon-style {
@@ -597,9 +126,6 @@ body, html {
   font-size: 24px;
 }
 
-.chatbot-icon:hover {
-  background-color: #0073e6; /* Darker blue on hover */
-}
 .chatbot-container {
   position: fixed;
   bottom: 20px;
@@ -607,27 +133,41 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1000;
 }
 
 .chatbot-bubble {
-  display: none;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
+  position: absolute;
+  bottom: 90px;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  background-color: #2a3d66;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 20px;
   font-size: 14px;
-  margin-bottom: 5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(10px);
+  pointer-events: none;
+  max-width: 240px;
+  text-align: center;
+  border: 1px solid #ddd;
 }
 
-.chatbot-icon {
-  font-size: 30px;
-  background-color: #4c8bfc;
-  color: white;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
+.chatbot-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  right: 20px;
+  border-width: 10px 10px 0 10px;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
 }
 
-.chatbot-icon:hover + .chatbot-bubble {
-  display: block;
+.chatbot-container:hover .chatbot-bubble {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }

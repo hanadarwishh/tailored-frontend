@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "./ExplainerSection.css";
-import { FaEye, FaThumbsUp, FaUser, FaVideo, FaRegClock, FaBook, FaFilter, FaPlus } from 'react-icons/fa';
-
+import { FaEye, FaThumbsUp, FaUser, FaVideo, FaRegClock, FaTachometerAlt, FaFilter, FaPlus } from 'react-icons/fa';
 import SidebarSmall from "../Sidenav/Sidenavsmall";
 import Navbar from "../../NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
-
+import LoadingScreen from "../LoadingScreen"
 
 const ExplainerSection = ({ courseId, userId }) => {
   const navigate = useNavigate();
 
   const [videos, setVideos] = useState([]);
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loadingVideos, setLoadingVideos] = useState(true);
+  const [loadingCourses, setLoadingCourses] = useState(true);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedCourses, setExpandedCourses] = useState({});
@@ -36,6 +36,8 @@ const ExplainerSection = ({ courseId, userId }) => {
         setCourses(data.courses || []);
       } catch (error) {
         console.error("Error fetching courses:", error.message);
+      } finally {
+        setLoadingCourses(false);
       }
     };
     fetchCourses();
@@ -59,7 +61,7 @@ const ExplainerSection = ({ courseId, userId }) => {
       } catch (error) {
         console.error("Error fetching videos:", error.message);
       } finally {
-        setLoading(false);
+        setLoadingVideos(false);
       }
     };
     fetchVideos();
@@ -106,13 +108,13 @@ const ExplainerSection = ({ courseId, userId }) => {
     }));
   };
 
-  if (loading) return <p>Loading videos...</p>;
+  if (loadingCourses) return <LoadingScreen title="Loading courses..." />;
+  if (loadingVideos) return <LoadingScreen title="Loading videos..." />;
 
   return (
     <div className="explainer-main-container">
       <Navbar />
       <div className="sidebar-and-content">
-
         <div className="explainer-content">
           <h1 className="section-header">Welcome to ExplainED!</h1>
 
@@ -198,7 +200,7 @@ const ExplainerSection = ({ courseId, userId }) => {
                           <h3 className="video-topic">{video.topic}</h3>
                           <div className="video-meta">
                             <div className="creator-info">
-                              <img src={video.creator.picture} alt="creator" />
+                              <img src={video.creator.profileimageurl} alt="creator" />
                               {video.creator.username}
                             </div>
                             <button 
@@ -224,11 +226,28 @@ const ExplainerSection = ({ courseId, userId }) => {
             </div>
 
             <div className="right-sidebar">
-              <h2>Extra Tools</h2>
-              <p>Future widgets or suggested content can go here.</p>
-              <SidebarSmall/>
-              
-            </div>
+  <h2>Extra Tools</h2>
+  <ul className="tool-list">
+  <li className="tool-item" onClick={() => navigate("/student")}>
+      <FaTachometerAlt className="tool-icon" />
+      <span>Back to Dashboard</span>
+    </li>
+    <li className="tool-item">
+      <FaVideo className="tool-icon" />
+      <span>My Videos</span>
+    </li>
+    <li className="tool-item">
+      <FaThumbsUp className="tool-icon" />
+      <span>Liked Videos</span>
+    </li>
+    <li className="tool-item">
+      <FaRegClock className="tool-icon" />
+      <span>Under Review</span>
+    </li>
+  </ul>
+  {/* <SidebarSmall /> */}
+</div>
+
 
           </div>
         </div>

@@ -1,81 +1,100 @@
-// SidebarPage.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightFromSquare,
-  faMoneyBill,
   faBriefcase,
   faBookBookmark,
   faGraduationCap,
   faGroupArrowsRotate,
-  faCalendarDays,
   faListCheck,
   faUser,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import logo from "../../Assets/tailored logo.png"; 
+import logo from "../../Assets/tailored logo.png";
+import "./Sidenav.css";
 
-const SidebarPage = () => {
+const SidebarPage = ({ onCollapse }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  
+  const handleSidebarClick = () => {
+    const newCollapsedState = !isCollapsed;
+    setIsCollapsed(newCollapsedState);
+    
+    if (onCollapse) {
+      onCollapse(newCollapsedState);
+    }
+  };
+
+  useEffect(() => {
+    if (onCollapse) {
+      onCollapse(isCollapsed);
+    }
+  }, [isCollapsed, onCollapse]);
+
   return (
     <div className="sidebar-page">
-      <nav className="side-nav">
+      <nav
+        className={`side-nav ${isCollapsed ? "collapsed" : ""}`}
+        onClick={handleSidebarClick}
+      >
         <div className="nav-logo">
-          <img src={logo} alt="Tailored Logo" />
+          <img src={logo} alt="Tailored Logo" className="logo-img" />
+          {!isCollapsed && <p className="logo-title">TailorED</p>}
         </div>
+
+        <hr className="logo-divider" />
+
         <ul className="nav-links">
           <li>
             <Link to="/student">
-              <FontAwesomeIcon icon={faArrowUpRightFromSquare} className="dashboard-icon" />
-              Dashboard
+              <FontAwesomeIcon
+                icon={faArrowUpRightFromSquare}
+                className="dashboard-icon nav-icon"
+              />
+              {!isCollapsed && <span>Dashboard</span>}
             </Link>
           </li>
-          {/* <li>
-            <Link to="/payment-info">
-              <FontAwesomeIcon icon={faMoneyBill} className="payment-icon" />
-              Payment Info
-            </Link>
-          </li> */}
           <li>
             <Link to="/portfolio">
-              <FontAwesomeIcon icon={faBriefcase} className="portfolio-icon" />
-              Portfolio
+              <FontAwesomeIcon icon={faBriefcase} className="portfolio-icon nav-icon" />
+              {!isCollapsed && <span>Portfolio</span>}
             </Link>
           </li>
           <li>
             <Link to="/courses">
-              <FontAwesomeIcon icon={faBookBookmark} className="courses-icon" />
-              Courses
+              <FontAwesomeIcon icon={faBookBookmark} className="courses-icon nav-icon" />
+              {!isCollapsed && <span>Courses</span>}
             </Link>
           </li>
           <li>
             <Link to="/gpa">
-              <FontAwesomeIcon icon={faGraduationCap} className="gpa-icon" />
-              GPA
+              <FontAwesomeIcon icon={faGraduationCap} className="gpa-icon nav-icon" />
+              {!isCollapsed && <span>GPA</span>}
             </Link>
           </li>
           <li>
             <Link to="/explainer-section">
-              <FontAwesomeIcon icon={faGroupArrowsRotate} className="community-icon" />
-              Explainer Section
+              <FontAwesomeIcon
+                icon={faGroupArrowsRotate}
+                className="community-icon nav-icon"
+              />
+              {!isCollapsed && <span>Explainer Section</span>}
             </Link>
           </li>
-          {/* <li>
-            <Link to="/schedule">
-              <FontAwesomeIcon icon={faCalendarDays} className="schedule-icon" />
-              Schedule
-            </Link>
-          </li> */}
           <li>
             <Link to="/progress-tracker">
-              <FontAwesomeIcon icon={faListCheck} className="progress-tracker" />
-              Progress Tracker
+              <FontAwesomeIcon
+                icon={faListCheck}
+                className="progress-tracker nav-icon"
+              />
+              {!isCollapsed && <span>Progress Tracker</span>}
             </Link>
           </li>
           <li>
-            <Link to="/account">
-              <FontAwesomeIcon icon={faUser} className="account-icon" />
-              Account
+            <Link to="/profile">
+              <FontAwesomeIcon icon={faUser} className="account-icon nav-icon" />
+              {!isCollapsed && <span>Account</span>}
             </Link>
           </li>
           <li>
@@ -86,8 +105,11 @@ const SidebarPage = () => {
                 localStorage.removeItem("userToken");
               }}
             >
-              <FontAwesomeIcon icon={faRightFromBracket} className="logout-icon" />
-              Logout
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                className="logout-icon nav-icon"
+              />
+              {!isCollapsed && <span>Logout</span>}
             </Link>
           </li>
         </ul>

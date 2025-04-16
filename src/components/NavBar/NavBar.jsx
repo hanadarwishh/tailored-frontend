@@ -1,27 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./NavBar.css";
+import { IoIosArrowDropdown } from "react-icons/io";
 
-const Navbar = () => {
-  // Retrieve user data from localStorage
+const Navbar = ({pageTitle}) => {
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const { firstname, lastname, userpictureurl } = userData;
 
-  // State for managing dropdown visibility
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // Handle logout
   const handleLogout = () => {
-    localStorage.removeItem("userData"); // Clear user data
+    localStorage.removeItem("userData");
     localStorage.clear();
-
-    window.location.href = "/login"; // Redirect to login page
+    
+    window.location.href = "/login";
   };
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-logo"></div>
-        <div className="navbar-user">
+        <div className="navbar-logo">
+          <h1 className="page-title">{pageTitle}</h1>
+        </div>
+        <div className="navbar-user" ref={dropdownRef}>
           <span className="user-name">{`${firstname || "User"} ${
             lastname || "Name"
           }`}</span>
@@ -29,16 +43,29 @@ const Navbar = () => {
             className="user-avatar"
             onClick={() => setDropdownVisible(!dropdownVisible)}
           >
-            {console.log(userpictureurl)}
             <img
-              src={userpictureurl || "https://via.placeholder.com/40"}
-              className="avatar-img"
+              src={userpictureurl || "../Assets/student_pic.jpg"}
+              className="avatar-img" 
+              alt="Student"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "https://images.rawpixel.com/image_png_1300/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTA4L3Jhd3BpeGVsb2ZmaWNlNF8zZF9jaGFyYWN0ZXJfaWxsdXN0cmF0aW9uX29mX2FfYmxhY2tfY2h1YmJ5X3N0dV8xY2E5OThlNy0wYmQyLTRmZGEtOWRmYi0yMmMwMGMyYjU0NTIucG5n.png";
+              }}
             />
-            <i className="dropdown-icon">▼</i>
+            <i className="dropdown-icon"><IoIosArrowDropdown /></i>
           </div>
           {dropdownVisible && (
             <div className="dropdown-menu">
-              <button onClick={handleLogout} className="dropdown-item">
+              <button 
+                onClick={() => window.location.href = "/profile"} 
+                className="dropdown-item"
+              >
+                Profile
+              </button>
+              <button 
+                onClick={handleLogout} 
+                className="dropdown-item"
+              >
                 Logout
               </button>
             </div>

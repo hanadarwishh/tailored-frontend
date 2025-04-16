@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../../NavBar/NavBar";
-import SidebarSmall from "../../Sidenav/Sidenavsmall";
+
 import "./MyProfile.css";
+import Navbar from "../../../NavBar/NavBar";
+import SidebarPage from "../../../Students_nav_bar/Sidenav/Sidenavsmall";
+import LoadingScreen from "../../LoadingScreen";
 
 const MyProfile = () => {
   const navigate = useNavigate();
@@ -75,13 +77,13 @@ const MyProfile = () => {
     navigate(`/edit-video/${videoId}`);
   };
 
-  if (loading) return <p>Loading your videos...</p>;
+  if (loading) return <LoadingScreen title="Loading your Videos" />;
 
   return (
     <div className="sidenavbar-small-profile">
       <Navbar />
       <div className="small-profile">
-        <SidebarSmall />
+        <SidebarPage />
         <div className="profile-section">
           <h1>My Profile - My Videos</h1>
           <div className="videos-container">

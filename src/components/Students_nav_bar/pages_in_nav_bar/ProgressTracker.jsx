@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './ProgressTracker.css'; // Updated styles
-import SidebarSmall from '../Sidenav/Sidenavsmall';
+import SidebarSmall from '../../Students_nav_bar/Sidenav/Sidenav';
 
 const ProgressTracker = () => {
     const [major, setMajor] = useState('');

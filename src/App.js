@@ -16,7 +16,10 @@ import MyProfile from "./components/Students_nav_bar/pages_in_nav_bar/ExplainerS
 import MultiChatbot from "./components/ChatbotMulti.jsx";
 import CourseChatbot from "./components/CourseChatbot.jsx";
 import CourseSummarize from "./components/CourseSummarize.jsx";
-
+import Instructor from "./components/pages/instructor/Dashboard/InstructorDashboard.jsx";
+import InstructorCourses from "./components/pages/instructor/Courses/Courses.jsx";
+import InstructorCourseDetails from "./components/pages/instructor/CourseDetails/CourseDetails.jsx";
+import AddLecturePage from "./components/pages/instructor/AddLecture/AddLecture.jsx";
 function App() {
   return (
     <Router>
@@ -39,6 +42,17 @@ function App() {
         <Route path="/multi-purpose-chatbot" element={<MultiChatbot />} />
         <Route path="/course-chatbot" element={<CourseChatbot />} />
         <Route path="/lecture-summarize" element={<CourseSummarize />} />
+        <Route path="/instructor" element={<Instructor />} />
+        <Route path="/instructor-courses" element={<InstructorCourses />} />
+        <Route
+          path="/course-details-instructor"
+          element={<InstructorCourseDetails />}
+        />
+        <Route
+          path="/course-details-instructor/:id"
+          element={<InstructorCourseDetails />}
+        />
+        <Route path="/add-lecture" element={<AddLecturePage />} />
       </Routes>
     </Router>
   );

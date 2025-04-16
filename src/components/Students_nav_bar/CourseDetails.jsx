@@ -1,22 +1,108 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import Modal from "react-modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import {
   FaArrowDown,
   FaArrowUp,
-  FaBook,
   FaFolderOpen,
   FaFileDownload,
   FaUpload,
   FaComments,
-  FaClipboardList,
-  FaRegFileAlt,  // Add the Summarize Icon (can use this or any other)
+  FaRegFileAlt,
 } from "react-icons/fa";
-import Modal from "react-modal";
+import { MdCancel } from "react-icons/md";
+
 import "./CourseDetails.css";
 import Navbar from "../NavBar/NavBar";
-import chatbotImage from '../Assets/chatbot_full-removebg-preview.png'; 
+import chatbotImage from "../Assets/chatbot_full-removebg-preview.png";
+import LoadingScreen from "./LoadingScreen";
 
-Modal.setAppElement("#root");
+// const mockCourseData = {
+//   courses: [
+//     {
+//       id: 1,
+//       name: "Week 1",
+//       modules: [
+//         {
+//           id: 101,
+//           name: "Lecture 1",
+//           modname: "resource",
+//           url: "https://example.com/lecture1",
+//           contents: [
+//             {
+//               filename: "Lecture1.pdf",
+//               fileurl: "https://example.com/files/lecture1.pdf",
+//               filesize: 123456,
+//             },
+//           ],
+//         },
+//         {
+//           id: 102,
+//           name: "Assignment 1",
+//           modname: "assign",
+//         },
+//         {
+//           id: 103,
+//           name: "Discussion 1",
+//           modname: "forum",
+//           instance: 12,
+//         },
+//       ],
+//     },
+//     {
+//       id: 2,
+//       name: "Week 2",
+//       modules: [
+//         {
+//           id: 101,
+//           name: "Lecture 2",
+//           modname: "resource",
+//           url: "https://example.com/lecture1",
+//           contents: [
+//             {
+//               filename: "Lecture2a.pdf",
+//               fileurl: "https://example.com/files/lecture1.pdf",
+//               filesize: 123456,
+//             },
+//             {
+//               filename: "Lecture2b.pdf",
+//               fileurl: "https://example.com/files/lecture2.pdf",
+//               filesize: 21,
+//             },
+//           ],
+//         },
+//         {
+//           id: 102,
+//           name: "Assignment 1",
+//           modname: "assign",
+//         },
+//         {
+//           id: 103,
+//           name: "Discussion 1",
+//           modname: "forum",
+//           instance: 12,
+//         },
+//       ],
+//     },
+//   ],
+// };
+
+// const mockAssignmentData = {
+//   courses: {
+//     assignments: [
+//       {
+//         id: 555,
+//         name: "Assignment 1",
+//         duedate: "May 17, 2025",
+//         opened: "May 15, 2025",
+//         description: "Complete Assignment 1 following the instructions provided in the course materials.",
+//         title: "Assignment 1: Introduction to Course Concepts",
+//       },
+//     ],
+//   },
+// };
 
 const CourseDetails = () => {
   const location = useLocation();
@@ -31,11 +117,9 @@ const CourseDetails = () => {
   const [uploading, setUploading] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [timeRemaining, setTimeRemaining] = useState("");
-  const [textSubmission, setTextSubmission] = useState(""); 
-  const [showBubble, setShowBubble] = useState(true); 
 
-  const courseId = location.state?.course?.id;
-  const courseName = location.state?.course?.fullname;
+  const courseId = location.state?.course?.id || 1;
+  const courseName = location.state?.course?.fullname || "Mock Course";
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const TOKEN = userData.token;
 
@@ -68,9 +152,23 @@ const CourseDetails = () => {
     setDragging(false);
   };
 
+  // const submitAssignment = async () => {
+  //   if (!file) {
+  //     alert("Please select a file for submission.");
+  //     return;
+  //   }
+
+  //   setUploading(true);
+  //   setTimeout(() => {
+  //     alert("Assignment submitted successfully!");
+  //     closeAssignmentModal();
+  //     setUploading(false);
+  //   }, 1500);
+  // };
+
   const submitAssignment = async () => {
     try {
-      if (!file && !textSubmission) {
+      if (!file) {
         alert("Please provide a text or file for submission.");
         return;
       }
@@ -83,7 +181,7 @@ const CourseDetails = () => {
 
      const pluginData = {
         onlinetext_editor: {
-          text: textSubmission || "", 
+          text: "", 
           format: 1,
           itemid: 0, 
         },
@@ -121,6 +219,12 @@ const CourseDetails = () => {
     }
   };
 
+  // const openAssignmentModal = () => {
+  //   const assign = mockAssignmentData.courses.assignments[0];
+  //   setSelectedAssignment(assign);
+  //   setIsModalOpen(true);
+  // };
+
   const openAssignmentModal = async (assignid) => {
     try {
       const response = await fetch(
@@ -148,9 +252,20 @@ const CourseDetails = () => {
   const closeAssignmentModal = () => {
     setIsModalOpen(false);
     setSelectedAssignment(null);
-    setTextSubmission(""); 
-    setFile(null); 
+    setFile(null);
   };
+
+  // useEffect(() => {
+  //   const courseData = mockCourseData;
+  //   setCourse(courseData);
+
+  //   const initialExpanded = {};
+  //   courseData.courses.forEach((section) => {
+  //     initialExpanded[section.id] = true;
+  //   });
+  //   setExpandedSections(initialExpanded);
+  //   setLoading(false);
+  // }, []);
 
   useEffect(() => {
     if (courseId) {
@@ -214,211 +329,238 @@ const CourseDetails = () => {
   }, [selectedAssignment]);
 
   const handleChatbotClick = () => {
-    navigate("/course-chatbot", { 
-      state: { 
-        courseName: courseName, 
-        courseId: courseId 
-      }
+    navigate("/course-chatbot", {
+      state: { courseName, courseId },
     });
   };
 
   const handleSummarizeClick = (selectedFileUrl, selectedModuleId) => {
     const allLectures = [];
-  
+
+    const sections = course?.courses || [];
     sections.forEach((section) => {
       section.modules?.forEach((module) => {
-        if (module.contents?.length > 0) {
-          module.contents.forEach((content) => {
-            allLectures.push({
-              moduleId: module.id,
-              name: content.filename,
-              filename: content.filename, // make sure filename is included
-              url: content.fileurl,
-              fileurl: content.fileurl,  // explicitly include fileurl
-            });
+        module.contents?.forEach((content) => {
+          allLectures.push({
+            moduleId: module.id,
+            name: content.filename,
+            filename: content.filename,
+            url: content.fileurl,
+            fileurl: content.fileurl,
           });
-        }
+        });
       });
     });
-  
+
     const selectedLecture = allLectures.find(
       (lecture) => lecture.url === selectedFileUrl
     );
-  
+
     navigate("/lecture-summarize", {
       state: {
         selectedLecture,
         allLectures,
-        courseName
+        courseName,
       },
     });
   };
-  
-  
 
-  if (loading) {
-    return <p className="loading">Loading course details...</p>;
-  }
-
-  if (error) {
-    return (
-      <div className="error">
-        <p>{error}</p>
-        <button onClick={() => navigate("/courses")}>Back to Courses</button>
-      </div>
-    );
-  }
-
-  if (!course) {
-    return (
-      <div className="error">
-        <p>Course details not found.</p>
-        <button onClick={() => navigate("/courses")}>Back to Courses</button>
-      </div>
-    );
-  }
+  if (loading) return <LoadingScreen title="Loading Course Details" />;
+  if (!course) return <div className="error"><p>No course found.</p></div>;
 
   const sections = course.courses || [];
 
   return (
     <div>
-      <Navbar />
       <div className="course-details-page">
-        <div className="course-header">
-          <h2>
-            <FaBook className="cd-icon" /> {courseName}
-          </h2>
-          <p>Explore the course details below:</p>
-        </div>
+        <Navbar pageTitle={courseName} />
+        
 
-        <div className="sections-list">
-          {sections.length > 0 ? (
-            sections.map((section) => (
-              <div key={section.id} className="section-card">
-                <div
-                  className="section-header"
-                  onClick={() => toggleSection(section.id)}
+        <div className="modules-list">
+          <h3>Course Modules</h3>
+          {sections.map((section) => (
+            <div key={section.id} className="section-card">
+              <div
+                className="section-header"
+                onClick={() => toggleSection(section.id)}
+              >
+                <h4>
+                  <FaFolderOpen className="cd-icon" /> {section.name}
+                </h4>
+                <span
+                  className={`toggle-arrow ${
+                    expandedSections[section.id] ? "open" : ""
+                  }`}
                 >
-                  <h4>
-                    <FaFolderOpen className="cd-icon" /> {section.name}
-                  </h4>
-                  <span>
-                    {expandedSections[section.id] ? <FaArrowUp /> : <FaArrowDown />}
-                  </span>
-                </div>
+                  {expandedSections[section.id] ? (
+                    <FaArrowUp />
+                  ) : (
+                    <FaArrowDown />
+                  )}
+                </span>
+              </div>
 
-                {expandedSections[section.id] && section.modules?.length > 0 && (
-                  <div className="module-list">
-                    {section.modules.map((module) => (
-                      <div key={module.id} className="course-module-item">
-                        {module.modname === "assign" ? (
-                          <button
-                            className="assignment-button"
-                            onClick={() => openAssignmentModal(module.id)}
-                          >
-                            <FaUpload className="red-icon" /> {module.name}
-                          </button>
-                        ) : module.modname === "forum" ? (
-                          <button
-                            className="forum-button"
-                            onClick={() => navigate("/discussion-forum", { state: { forumId: module.instance } })}
-                          >
-                            <FaComments className="blue-icon" /> {module.name}
-                          </button>
-                        ) : (
-                          <div>
-                            <div className="lecture-summarization-icon">
-                            <FaRegFileAlt 
-  className="green-icon"
-  onClick={() => handleSummarizeClick(module.contents[0]?.fileurl, module.id)}
-/>
-
-                            </div>
+              {expandedSections[section.id] && section.modules?.length > 0 && (
+                <div className="module-list">
+                  {section.modules.map((module) => (
+                    <div key={module.id} className="course-module-item">
+                      {module.modname === "assign" ? (
+                        <button
+                          className="assignment-button"
+                          onClick={() => openAssignmentModal()}
+                        >
+                          <FaUpload className="red-icon" /> {module.name}
+                        </button>
+                      ) : module.modname === "forum" ? (
+                        <button
+                          className="forum-button"
+                          onClick={() =>
+                            navigate("/discussion-forum", {
+                              state: { forumId: module.instance },
+                            })
+                          }
+                        >
+                          <FaComments className="blue-icon" /> {module.name}
+                        </button>
+                      ) : (
+                        <div style={{ position: "relative", width: "100%" }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                             <a
                               href={module.url}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="module-link"
+                              style={{ display: "flex", alignItems: "center" }}
                             >
-                              {module.name}
+                              <FaRegFileAlt style={{ marginRight: "0.5rem", font: "1.3rem" }} /> {module.name}
                             </a>
-                            {module.contents?.length > 0 && (
-                              <div className="module-contents">
-                                {module.contents.map((content, index) => (
-                                  <div key={index} className="content-item">
-                                    <a
-                                      href={`${content.fileurl}&token=${TOKEN}`}
-                                      download
-                                      className="content-link"
-                                    >
-                                      <FaFileDownload /> {content.filename}
-                                    </a>
-                                    <p>Size: {content.filesize} bytes</p>
-                                  </div>
-                                ))}
-                              </div>
-                            )}
                           </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))
-          ) : (
-            <p>No sections available for this course.</p>
-          )}
+                          {module.contents?.length > 0 && (
+                            <div className="module-contents">
+                              {module.contents.map((content, idx) => (
+                                <div key={idx} className="content-item">
+                                  <a
+                                    href={content.fileurl}
+                                    download
+                                    className="content-link"
+                                  >
+                                    <FaFileDownload /> {content.filename}
+                                  </a>
+                                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                                    <p>{(content.filesize / 1024).toFixed(1)} KB</p>
+                                    <FaRegFileAlt
+                                      className="green-icon"
+                                      onClick={() => handleSummarizeClick(content.fileurl, module.id)}
+                                      title={`Generate summary for ${content.filename}`}
+                                      style={{ cursor: "pointer" }}
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <div className="course-options">
+          <button className="back-button" onClick={() => navigate("/courses")}>
+            <FontAwesomeIcon icon={faArrowLeft} /> Back to Courses
+          </button>
         </div>
 
         <Modal
           isOpen={isModalOpen}
           onRequestClose={closeAssignmentModal}
-          contentLabel="Assignment Submission"
-          className="modal-content"
-          overlayClassName="modal-overlay"
+          contentLabel="Assignment Details"
+          className="assignment-modal"
+          overlayClassName="assignment-modal-overlay"
+          ariaHideApp={false}
         >
-          <h3>{selectedAssignment?.name}</h3>
-          <p>Time remaining: {timeRemaining}</p>
+          {selectedAssignment && (
+            <>
+              <button
+                className="close-modal-button"
+                onClick={closeAssignmentModal}
+                aria-label="Close modal"
+              >
+                <MdCancel />
+              </button>
+              <h3>{selectedAssignment.title}</h3>
+              
+              <div className="countdown-timer">
+                Time Remaining: {timeRemaining}
+              </div>
+              
+              <p>
+                <strong>Opened:</strong> {selectedAssignment.opened}
+              </p>
+              <p>
+                <strong>Due Date:</strong> {selectedAssignment.duedate}
+              </p>
+              <p>
+              <strong>Description:</strong> {selectedAssignment.description}
+              </p>
 
-          <textarea
-            placeholder="Enter text for submission (optional)"
-            value={textSubmission}
-            onChange={(e) => setTextSubmission(e.target.value)}
-            rows="4"
-            className="submission-textarea"
-          />
+              <div className="file-upload-container">
+                <h4>Upload Your Submission</h4>
 
-          <div
-            className={`file-upload-area ${dragging ? "dragging" : ""}`}
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-          >
-            <p>{file ? file.name : "Drag and drop or browse to select a file"}</p>
-            <input type="file" onChange={handleFileChange} />
-          </div>
+                <div
+                  className={`drag-drop-area ${dragging ? "dragging" : ""}`}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                >
+                  {file ? (
+                    <p>Selected file: <strong>{file.name}</strong></p>
+                  ) : (
+                    <p>Drag and drop your file here, or click the button below to select a file</p>
+                  )}
+                  <input
+                    type="file"
+                    onChange={handleFileChange}
+                    className="file-input"
+                    id="assignment-file"
+                  />
+                  <label
+                    htmlFor="assignment-file"
+                    className="file-select-button"
+                  >
+                    Select File
+                  </label>
+                </div>
 
-          <div className="modal-actions">
-            <button onClick={submitAssignment} disabled={uploading}>
-              {uploading ? "Submitting..." : "Submit Assignment"}
-            </button>
-            <button onClick={closeAssignmentModal}>Cancel</button>
-          </div>
+                <div className="submit-button-wrapper">
+                  <button
+                    className="add-submission-button"
+                    disabled={!file || uploading}
+                    onClick={submitAssignment}
+                  >
+                    {uploading ? "Submitting..." : "Submit Assignment"}
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
         </Modal>
-
       </div>
 
       <div className="chatbot-container" onClick={handleChatbotClick}>
-          <div className={`chatbot-bubble ${showBubble ? 'show' : ''}`}>
-            <p>Hi there! I am here if you need any help!</p>
-          </div>
-          <img
-            src={chatbotImage}
-            alt="Chatbot"
-            className="chatbot-image"
-          />
+        <div className="chatbot-bubble">
+          <p>
+            Need help with your coursework? Chat with me or upload files for assistance!
+          </p>
         </div>
+        <div className="chatbot-icon">
+          <img src={chatbotImage} alt="Chatbot Assistant" className="chatbot-image" />
+        </div>
+      </div>
     </div>
   );
 };

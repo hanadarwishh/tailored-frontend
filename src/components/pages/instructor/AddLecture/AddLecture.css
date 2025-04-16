@@ -1,0 +1,89 @@
+.add-lecture-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    background: #fafafa;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .add-lecture-container h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  
+  .required {
+    color: #e63946;
+  }
+  
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    resize: vertical;
+  }
+  
+  textarea {
+    min-height: 100px;
+  }
+  
+  .file-drop-area {
+    border: 2px dashed #ccc;
+    padding: 30px;
+    text-align: center;
+    border-radius: 12px;
+    color: #777;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .file-drop-area:hover {
+    border-color: #0077ff;
+  }
+  
+  .file-drop-area p {
+    margin-bottom: 12px;
+  }
+  
+  input[type="file"] {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background-color: #0077ff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #005dc5;
+  }
+  
+  button[disabled] {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
