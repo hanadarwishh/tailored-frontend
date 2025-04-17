@@ -108,3 +108,130 @@
     height: 200px;
   }
 }
+/* Main container layout */
+.my-profile-explainer-main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin-top: 40px;
+  background-color: #1e1e2f; /* consistent dark theme */
+  color: #fff;
+}
+
+/* Layout: Navbar on top, sidebar and content next */
+.my-profile-sidebar-and-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Left content area with videos */
+.my-profile-explainer-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background-color: #1e1e2f;
+}
+
+/* Section title */
+.my-profile-section-header {
+  font-size: 2rem;
+  margin-bottom: 25px;
+  color: #ffffff;
+}
+
+/* Videos list container */
+.my-profile-videos-display {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Video card styling */
+.my-profile-video-card-modern {
+  background-color: #2a2a40;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Embed video */
+.my-profile-video-embed {
+  width: 100%;
+  height: 360px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Video text */
+.my-profile-video-topic {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.my-profile-video-course {
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+/* Actions */
+.my-profile-video-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.my-profile-edit-button,
+.my-profile-delete-button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.my-profile-edit-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.my-profile-delete-button {
+  background-color: #e53935;
+  color: white;
+}
+
+/* Right sidebar tools */
+.my-profile-right-sidebar {
+  width: 240px;
+  background-color: #252542;
+  padding: 20px;
+  color: #fff;
+}
+
+.my-profile-tool-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.my-profile-tool-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.my-profile-tool-item:hover {
+  background-color: #333355;
+}
+
+.my-profile-tool-icon {
+  margin-right: 10px;
+  font-size: 1.2rem;
+}

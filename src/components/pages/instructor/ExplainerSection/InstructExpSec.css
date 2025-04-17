@@ -1,0 +1,42 @@
+.review-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .approve-btn,
+  .disapprove-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: white;
+  }
+  
+  .approve-btn {
+    background: linear-gradient(to right, #00c853, #43a047);
+    box-shadow: 0 3px 6px rgba(0, 200, 83, 0.4);
+  }
+  
+  .disapprove-btn {
+    background: linear-gradient(to right, #d32f2f, #c62828);
+    box-shadow: 0 3px 6px rgba(211, 47, 47, 0.4);
+  }
+  
+  .approve-btn:hover,
+  .disapprove-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .approve-btn svg,
+  .disapprove-btn svg {
+    font-size: 16px;
+  }
+  

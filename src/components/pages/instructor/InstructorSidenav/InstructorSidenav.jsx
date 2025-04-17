@@ -74,7 +74,7 @@ const SidebarPage = ({ onCollapse }) => {
             </Link>
           </li> */}
           <li>
-            <Link to="/explainer-section">
+            <Link to="/instructor-explained">
               <FontAwesomeIcon
                 icon={faGroupArrowsRotate}
                 className="community-icon nav-icon"

@@ -232,11 +232,11 @@ const ExplainerSection = ({ courseId, userId }) => {
       <FaTachometerAlt className="tool-icon" />
       <span>Back to Dashboard</span>
     </li>
-    <li className="tool-item">
+    <li className="tool-item" onClick={() => navigate("/my-profile")}>
       <FaVideo className="tool-icon" />
       <span>My Videos</span>
     </li>
-    <li className="tool-item">
+    <li className="tool-item" onClick={() => navigate("/liked-videos")}>
       <FaThumbsUp className="tool-icon" />
       <span>Liked Videos</span>
     </li>

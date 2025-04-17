@@ -20,6 +20,10 @@ import Instructor from "./components/pages/instructor/Dashboard/InstructorDashbo
 import InstructorCourses from "./components/pages/instructor/Courses/Courses.jsx";
 import InstructorCourseDetails from "./components/pages/instructor/CourseDetails/CourseDetails.jsx";
 import AddLecturePage from "./components/pages/instructor/AddLecture/AddLecture.jsx";
+import InstructorExplainer from "./components/pages/instructor/ExplainerSection/InstructExpSec.jsx";
+import ReviewExplainerPage from "./components/pages/instructor/ExplainerSection/ReviewSection.jsx";
+import LikedVideos from "./components/Students_nav_bar/pages_in_nav_bar/Likes.jsx";
+
 function App() {
   return (
     <Router>
@@ -53,6 +57,9 @@ function App() {
           element={<InstructorCourseDetails />}
         />
         <Route path="/add-lecture" element={<AddLecturePage />} />
+        <Route path="/instructor-explained" element={<InstructorExplainer />} />
+        <Route path="/review-explainer" element={<ReviewExplainerPage />} />
+        <Route path="/liked-videos" element={<LikedVideos />} />
       </Routes>
     </Router>
   );

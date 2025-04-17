@@ -1,134 +1,175 @@
-/* PostExplainerVideo.css - Add drag and drop area with dotted border */
-
-.ep-explainer-sidebar {
+/* Global Container */
+.pev-main-container {
     display: flex;
-    flex-direction: row;
-}
-
-.ep-explainer-section-container {
-    max-width: 700px;
-    margin: 40px auto;
-    padding: 40px;
-    background: #f9f9f9;
-    border-radius: 12px;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.ep-section-title {
+    background-color: #111;
+    color: #fff;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* Content Layout */
+  .pev-content-layout {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    padding: 30px 40px;
+  }
+  
+  /* Form Section */
+  .pev-form-section {
+    width: 65%;
+    padding-right: 40px;
+  }
+  
+  .pev-section-title {
     font-size: 28px;
     font-weight: 600;
-    color: #0056b3;
     margin-bottom: 30px;
-    text-transform: uppercase;
-}
-
-.ep-explainer-form {
+    color: #fff;
+  }
+  
+  .pev-form {
     display: flex;
     flex-direction: column;
     gap: 25px;
-}
-
-.ep-form-group {
+  }
+  
+  .pev-form-group {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-}
-
-label {
-    font-size: 18px;
-    font-weight: bold;
-    color: #2a3d66;
-    margin-bottom: 10px;
-}
-
-input[type="text"],
-select,
-input[type="file"] {
-    padding: 15px;
+  }
+  
+  .pev-form-group label {
     font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+    margin-bottom: 8px;
+    color: #ccc;
+  }
+  
+  .pev-form-group input,
+  .pev-form-group select {
+    padding: 10px 14px;
+    border-radius: 6px;
+    background-color: #1e1e1e;
+    color: #fff;
+    border: 1px solid #333;
+    font-size: 15px;
+  }
+  
+  .pev-form-group input:focus,
+  .pev-form-group select:focus {
     outline: none;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-input[type="text"]:focus,
-select:focus,
-input[type="file"]:focus {
-    border-color: #0056b3;
-    box-shadow: 0 0 8px rgba(0, 86, 179, 0.5);
-}
-
-.ep-upload-container {
+    border-color: #5b9df9;
+  }
+  
+  .pev-input-error {
+    border: 1px solid #ff4c4c !important;
+  }
+  
+  /* Upload Section */
+  .pev-upload-section {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    position: relative;
-    margin: 20px 0;
-}
-
-.ep-drag-drop-container {
-    border: 2px dashed #0056b3; /* Dotted border for drag area */
+  }
+  
+  .pev-dropzone {
+    border: 2px dashed #666;
+    background-color: #1a1a1a;
     padding: 30px;
     text-align: center;
-    cursor: pointer;
-    border-radius: 12px;
-    background-color: #f2f9ff;
-    color: #0056b3;
-    transition: background-color 0.3s ease;
-}
-
-.ep-drag-drop-container:hover {
-    background-color: #e6f0ff;
-}
-
-.ep-upload-button {
-    background: linear-gradient(135deg, #0056b3, #3b87d6);
-    color: white;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .pev-dropzone:hover {
+    border-color: #5b9df9;
+  }
+  
+  .pev-upload-button {
+    margin-top: 12px;
+    padding: 10px 16px;
+    background-color: #333;
+    color: #fff;
     border: none;
-    padding: 12px 30px;
-    font-size: 16px;
-    border-radius: 50px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: transform 0.2s ease;
-    position: relative;
-    z-index: 1;
-}
-
-.ep-upload-button:hover {
-    transform: scale(1.05);
-}
-
-.ep-file-name {
     font-size: 14px;
-    color: #555;
-    margin-top: 15px;
-}
-
-.ep-submit-button {
-    padding: 15px 30px;
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
-    background: #0056b3;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.3s ease;
-}
-
-.ep-submit-button:hover {
-    background-color: #004080;
-    transform: scale(1.05);
-}
-.error-message {
-    color: red;
-    font-weight: bold;
+  }
+  
+  .pev-upload-button:hover {
+    background-color: #444;
+  }
+  
+  .pev-file-name {
     margin-top: 10px;
-    text-align: center;
-}
-.input-error {
-    border: 2px solid red;
-}
+    font-size: 14px;
+    color: #aaa;
+  }
+  
+  /* Error */
+  .pev-error-message {
+    color: #ff4c4c;
+    font-size: 14px;
+    margin-top: -10px;
+  }
+  
+  /* Submit */
+  .pev-submit-button {
+    margin-top: 20px;
+    background-color: #5b9df9;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .pev-submit-button:hover {
+    background-color: #488de0;
+  }
+  
+  /* Sidebar Widgets */
+  .pev-right-sidebar {
+    width: 30%;
+    background-color: #1a1a1a;
+    padding: 25px;
+    border-radius: 12px;
+    height: fit-content;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  
+  .pev-right-sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  .pev-tool-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .pev-tool-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 14px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .pev-tool-item:hover {
+    background-color: #333;
+  }
+  
+  .pev-tool-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    color: #5b9df9;
+  }
+  

@@ -8,12 +8,16 @@
 .sidebar-and-content {
   display: flex;
   margin-top: 40px;
-  height: calc(100vh - 20px); /* 90px to match sticky top of sidebars */
+  background-color: #101828; /* Set background color here */
+  overflow-y: auto; /* Enable scrolling if needed */
+  height: calc(100vh - 40px); /* 90px to match sticky top of sidebars */
 }
 
 .explainer-content {
   flex: 1;
   padding: 20px;
+  background-color: #101828; /* Set background color here */
+
   /* overflow-y: auto; */
 }
 

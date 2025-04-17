@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import {
+  FaEdit,
+  FaTrash,
+  FaTachometerAlt,
+  FaVideo,
+  FaRegClock,
+  FaThumbsUp,
+} from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 import "./MyProfile.css";
 import Navbar from "../../../NavBar/NavBar";
-import SidebarPage from "../../../Students_nav_bar/Sidenav/Sidenavsmall";
 import LoadingScreen from "../../LoadingScreen";
 
 const MyProfile = () => {
@@ -15,7 +21,6 @@ const MyProfile = () => {
   const userData = JSON.parse(localStorage.getItem("userData")) || {};
   const TOKEN = userData.token;
 
-  // Fetch user's posted videos
   useEffect(() => {
     const fetchUserVideos = async () => {
       try {
@@ -43,13 +48,11 @@ const MyProfile = () => {
     fetchUserVideos();
   }, [TOKEN]);
 
-  // Helper function to format Google Drive video URL
   const getEmbedVideoUrl = (url) => {
     const fileId = url.split("/d/")[1]?.split("/")[0];
     return `https://drive.google.com/file/d/${fileId}/preview`;
   };
 
-  // Handle video deletion
   const handleDelete = async (videoId) => {
     if (!window.confirm("Are you sure you want to delete this video?")) return;
 
@@ -66,13 +69,14 @@ const MyProfile = () => {
 
       if (!response.ok) throw new Error("Failed to delete video");
 
-      setVideos((prevVideos) => prevVideos.filter((video) => video.videoId !== videoId));
+      setVideos((prevVideos) =>
+        prevVideos.filter((video) => video.videoId !== videoId)
+      );
     } catch (error) {
       console.error("Error deleting video:", error.message);
     }
   };
 
-  // Navigate to edit page
   const handleEdit = (videoId) => {
     navigate(`/edit-video/${videoId}`);
   };
@@ -80,44 +84,67 @@ const MyProfile = () => {
   if (loading) return <LoadingScreen title="Loading your Videos" />;
 
   return (
-    <div className="sidenavbar-small-profile">
+    <div className="my-profile-explainer-main-container">
       <Navbar />
-      <div className="small-profile">
-        <SidebarPage />
-        <div className="profile-section">
-          <h1>My Profile - My Videos</h1>
-          <div className="videos-container">
+      <div className="my-profile-sidebar-and-content">
+        {/* Main Content */}
+        <div className="my-profile-explainer-content">
+          <h1 className="my-profile-section-header">My Profile - My Videos</h1>
+          <div className="my-profile-videos-display">
             {videos.length === 0 ? (
               <p>You haven't posted any videos yet.</p>
             ) : (
               videos.map((video) => (
-                <div key={video.videoId} className="video-card">
-                  <div className="video-container">
-                    <iframe
-                      src={getEmbedVideoUrl(video.videoUrl)}
-                      width="640"
-                      height="360"
-                      frameBorder="0"
-                      allow="autoplay; encrypted-media"
-                      allowFullScreen
-                    ></iframe>
-                  </div>
-                  <div className="video-info">
-                    <h3>{video.topic}</h3>
-                    <p className="video-course">{video.courseName}</p>
-                    <div className="video-actions">
-                      <button className="edit-button" onClick={() => handleEdit(video.videoId)}>
-                        <FaEdit /> Edit
-                      </button>
-                      <button className="delete-button" onClick={() => handleDelete(video.videoId)}>
-                        <FaTrash /> Delete
-                      </button>
-                    </div>
+                <div key={video.videoId} className="my-profile-video-card-modern">
+                  <iframe
+                    src={getEmbedVideoUrl(video.videoUrl)}
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                    className="my-profile-video-embed"
+                  ></iframe>
+                  <h3 className="my-profile-video-topic">{video.topic}</h3>
+                  <p className="my-profile-video-course">{video.courseName}</p>
+                  <div className="my-profile-video-actions">
+                    <button
+                      className="my-profile-edit-button"
+                      onClick={() => handleEdit(video.videoId)}
+                    >
+                      <FaEdit /> Edit
+                    </button>
+                    <button
+                      className="my-profile-delete-button"
+                      onClick={() => handleDelete(video.videoId)}
+                    >
+                      <FaTrash /> Delete
+                    </button>
                   </div>
                 </div>
               ))
             )}
           </div>
+        </div>
+
+        {/* Right Sidebar */}
+        <div className="my-profile-right-sidebar">
+          <h2>Extra Tools</h2>
+          <ul className="my-profile-tool-list">
+            <li className="my-profile-tool-item" onClick={() => navigate("/student")}>
+              <FaTachometerAlt className="my-profile-tool-icon" />
+              <span>Back to Dashboard</span>
+            </li>
+            <li className="my-profile-tool-item" onClick={() => navigate("/my-profile")}>
+              <FaVideo className="my-profile-tool-icon" />
+              <span>My Videos</span>
+            </li>
+            <li className="my-profile-tool-item" onClick={() => navigate("/liked-videos")}>
+              <FaThumbsUp className="my-profile-tool-icon" />
+              <span>Liked Videos</span>
+            </li>
+            <li className="my-profile-tool-item">
+              <FaRegClock className="my-profile-tool-icon" />
+              <span>Under Review</span>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
